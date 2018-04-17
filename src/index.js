@@ -1,8 +1,78 @@
 import ReactDOM from 'react-dom';
-import React from'react';
-import './index.css';
-import App from './App';
+import React, {Component} from'react';
+import { BrowserRouter as Router, Route, Link} from 'react-router-dom'
+import './css/css.css';
+
+import Home from './js/Home';
+import BookList from './js/BookList';
+import Purchase from './js/Purchase';
+import Login from './js/Login'
+import Profile from './js/Profile';
+import Cart from './js/Cart';
+import BookInfo from './js/BookInfo';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+let style = {
+    backgroundColor: '#8dc63f',
+    fontSize: 20,
+    fontWeight: 500,
+    height: 52,
+    padding: '0 3vmin',
+    borderRadius: 5,
+    color: '#fff'
+};
+
+let isLogin = false;
+let LoginID = '';
+let setLogin = function (value, ID) {
+    isLogin = value;
+    if(isLogin)
+        LoginID = ID;
+};
+class LoginButton extends Component {
+    render() {
+        return (
+        isLogin?
+            <div className="Link3">
+                <Link to={{pathname:"/profile", state:{userid: LoginID}}} style={style}>Profile</Link>
+                <Link to={{pathname:"/cart"}} style={style}>Cart</Link>
+            </div>
+            :
+            <div className="Link3">
+                <Link to="/login" style={style}>Login</Link>
+            </div>
+        );
+    }
+}
+
+class OnlineBookStore extends Component {
+    render() {
+        return (
+            <Router>
+                <div>
+                    <div>
+                        <h1 className="title">Online Bookstore</h1>
+                        <LoginButton/>
+                    </div>
+                    <div>
+                        <Link to="/" style={style} className="Link1">Home</Link>
+                        <Link to="/booklist" style={style} className="Link2">BookList</Link>
+                    </div>
+                    <hr/>
+                    <Route  exact path="/" component={Home}/>
+                    <Route path="/booklist" component={BookList}/>
+                    <Route path="/purchase" component={Purchase}/>
+                    <Route path="/login" component={Login}/>
+                    <Route path="/profile" component={Profile}/>
+                    <Route path="/cart" component={Cart}/>
+                    <Route path="/bookinfo" component={BookInfo}/>
+                </div>
+            </Router>
+        );
+    }
+}
+
+ReactDOM.render(<OnlineBookStore/>, document.getElementById('root'));
 registerServiceWorker();
+
+export {setLogin}

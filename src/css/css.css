@@ -1,0 +1,140 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.title {
+    text-align: left;
+    margin-left: 30vmin;
+}
+
+.Link1 {
+    text-align: left;
+    margin-left: 5vmin;
+}
+
+.Link2 {
+    text-align: left;
+    margin-left: 1vmin;
+}
+
+.Link3 {
+    text-align: right;
+    margin-right: 20vmin;
+}
+
+table{
+    align-content: center;
+    width: 150vmin;
+    float: top;
+    margin-left: 20vmin;
+    margin-top: 10vmin;
+    font-family: verdana,arial,sans-serif;
+    font-size: 2.5vmin;
+    color:#333333;
+    border-color: #666666;
+    border-collapse: collapse;
+}
+
+tr {
+    border-width: 0.2vmin;
+    padding: 10px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #dedede;
+}
+.t1 {
+    width: 50vmin;
+}
+.t2 {
+    width: 35vmin;
+}
+.t3 {
+    width: 15vmin;
+}
+.t4 {
+    width: 10vmin;
+}
+td {
+    border-width: 0.2vmin;
+    padding: 10px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #ffffff;
+}
+th {
+    text-align: center;
+    border-width: 0.2vmin;
+    padding: 10px;
+    width: 50px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #ffffff;
+}
+.SearchBarInput {
+    float: right;
+    margin-right: 20vmin;
+    border-radius: 5vmin;
+    font-size: 22px;
+    background: #A3D0C3;
+}
+.SearchBarInput select {
+    border: 2vmin solid #A3D0C3;
+    font-size: 15px;
+    margin-left: 1vmin;
+    border-radius: 5vmin;
+    background: #F9F0DA;
+    color: #9E9C9C;
+}
+.SearchBarInput input {
+    border: 2vmin solid #7BA7AB;
+    font-size: 15px;
+    border-radius: 5vmin;
+    background: #F9F0DA;
+    color: #9E9C9C;
+}
+
+.export {
+    text-align: right;
+    margin-right: 20vmin;
+    margin-top: 2vmin;
+}
+
+.Recommend {
+    font-size: 50px;
+    margin-left: 25vmin;
+    color: #39c5bb;
+}
+
+.LoginFun {
+    text-align: center;
+    margin-top: 10vmin;
+}
+
+.Button1 {
+    margin-top: 2vmin;
+    margin-right: 2vmin;
+}
+.Button2 {
+    margin-top: 2vmin;
+    margin-left: 2vmin;
+}
+
+.Button {
+    text-align: right;
+    margin-top: 10vmin;
+    margin-right: 20vmin;
+}
+
+.Inf {
+    margin-left: 20vmin;
+    margin-top: 8vmin;
+}
+.Header {
+    font-size: 22px;
+}
+.Content {
+    font-size: 20px;
+    margin-left: 10vmin;
+}
