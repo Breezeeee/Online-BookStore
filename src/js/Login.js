@@ -1,33 +1,45 @@
 import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
+import $ from 'jquery';
 
 import {setLogin} from "../index";
-import {UserData} from '../Data/UserData';
 
 class Login extends Component {
     constructor() {
         super();
-        this.state = {redirect: false, filterID: '', filterPassWord: ''};
+        this.state = {redirect: false, filterUsername: '', filterPassWord: ''};
         this.handleIDChange = this.handleIDChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
     }
     handleIDChange(e) {
-        this.setState({filterID:e.target.value});
+        this.setState({filterUsername:e.target.value});
     }
     handlePasswordChange(e) {
         this.setState({filterPassWord:e.target.value});
     }
     handleConfirmClick = () => {
         let success = false;
-        UserData.forEach((user) => {
-            if (user.ID === this.state.filterID && user.PassWord === this.state.filterPassWord) {
-                success = true;
+        let uid = "";
+        $.ajax({
+            url:"/userlogin",
+            data:{
+                username:this.state.filterUsername,
+                password:this.state.filterPassWord
+            },
+            context:document.body,
+            async:false,
+            type:"get",
+            success: function(data) {
+                if(data !== "null") {
+                    success = true;
+                    uid = data;
+                }
             }
         });
         if(success) {
             alert("Login Success !");
-            setLogin(true, this.state.filterID);
+            setLogin(true, uid);
             this.setState({redirect: true});
         }
         else {
@@ -39,6 +51,26 @@ class Login extends Component {
     };
 
     render() {
+        let uid = "";
+        let islogin = false;
+        $.ajax({
+            url:"/checkstate",
+            context:document.body,
+            async:false,
+            type:"get",
+            success: function(data) {
+                if(data !== "null") {
+                    uid = data;
+                    islogin = true;
+                }
+            }
+        });
+        if(islogin) {
+            setLogin(true, uid);
+        }
+        else {
+            setLogin(false, null);
+        }
         if (this.state.redirect) {
             return (
                 <Redirect push to="/booklist"/>
@@ -48,11 +80,11 @@ class Login extends Component {
             <div className="LoginFun">
                 <div>
                     <div>ID:</div>
-                    <input type="text" value={this.state.filterID} onChange={this.handleIDChange}/>
+                    <input type="text" value={this.state.filterUsername} onChange={this.handleIDChange}/>
                 </div>
                 <div>
                     <div>Password:</div>
-                    <input type="text" value={this.state.filterPassWord} onChange={this.handlePasswordChange}/>
+                    <input type="password" value={this.state.filterPassWord} onChange={this.handlePasswordChange}/>
                 </div>
                 <div>
                     <button onClick={this.handleConfirmClick} className="Button1">Confirm</button>

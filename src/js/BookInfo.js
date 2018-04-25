@@ -1,9 +1,9 @@
 import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
+import $ from 'jquery';
 
-import {BookData} from "../Data/BookData";
-import {Want} from "../Data/CartData";
+import {isLogin, LoginUid, setLogin} from "../index";
 
 let style = {
     backgroundColor: '#8dc63f',
@@ -31,12 +31,12 @@ class Information extends Component {
         this.Add = this.Add.bind(this);
         this.Minus = this.Minus.bind(this);
         this.AddToCart = this.AddToCart.bind(this);
-        this.state = {data: BookData, amount: 1};
+        this.state = {amount: 1, redirect: false};
     }
     Add() {
         let num = document.getElementById("num");
         let want_amount = parseInt(num.value) + 1;
-        let book_left = this.ChooseBook.Left;
+        let book_left = this.ChooseBook.Stock;
         if(want_amount > book_left)
             want_amount = book_left;
         this.setState({amount: want_amount});
@@ -59,35 +59,67 @@ class Information extends Component {
         }
         if(!flag)
             want_amount = this.state.amount;
-        let book_left = this.ChooseBook.Left;
+        let book_left = this.ChooseBook.Stock;
         if(want_amount > book_left) {
             want_amount = book_left;
             e.target.value = want_amount;
         }
-        if(want_amount === "") {
+        if(want_amount === "" || want_amount === "0") {
             want_amount = 1;
             e.target.value = want_amount;
         }
         this.setState({amount: want_amount});
     };
     AddToCart() {
-        let num = document.getElementById("num");
-        let want_amount = parseInt(num.value);
-        Want(this.ChooseBook.ID, want_amount);
-        alert("Success!");
+        if(!isLogin) {
+            alert("Please login first!");
+            this.setState({redirect: true});
+        }
+        else {
+            let num = document.getElementById("num");
+            let want_amount = parseInt(num.value);
+            $.ajax({
+                url:"/saveitem2",
+                data:{
+                    uid: LoginUid,
+                    bid: this.ChooseBook.ID,
+                    num: want_amount
+                },
+                context:document.body,
+                async:true,
+                type:"get",
+            });
+            alert("Success!");
+        }
     }
-    ChooseBook = {ID: this.props.BookID, Book: '', Author: '', Language: '', Published: '', Price: '', Left: ''};
+    ChooseBook = {ID: this.props.BookID, Book: '', Author: '', Language: '', Published: '', Price: 0, Stock: 0};
     render() {
-        this.state.data.forEach((book) => {
-            if (book.ID === this.ChooseBook.ID) {
-                this.ChooseBook.Book = book.Book;
-                this.ChooseBook.Author = book.Author;
-                this.ChooseBook.Language = book.Language;
-                this.ChooseBook.Published = book.Published;
-                this.ChooseBook.Price = (book.Price / 100).toFixed(2);
-                this.ChooseBook.Left = book.Left;
+        let book = null;
+        $.ajax({
+            url:"/qbook",
+            data:{
+                id:this.props.BookID
+            },
+            context:document.body,
+            async:false,
+            type:"get",
+            success:function(data) {
+                book = $.parseJSON(data);
             }
         });
+        this.ChooseBook.Book = book.name;
+        this.ChooseBook.Author = book.author;
+        this.ChooseBook.Language = book.language;
+        this.ChooseBook.Published = book.published;
+        this.ChooseBook.Price = (Number(book.price) / 100).toFixed(2);
+        this.ChooseBook.Stock = Number(book.stock);
+
+        if (this.state.redirect) {
+            return (
+                <Redirect push to="/login"/>
+            );
+        }
+
         return (
             <div className="Inf">
                 <h4>
@@ -111,8 +143,8 @@ class Information extends Component {
                     <p className="Content">{this.ChooseBook.Price}</p>
                 </h4>
                 <h4>
-                    <p className="Header">Left: </p>
-                    <p className="Content">{this.ChooseBook.Left}</p>
+                    <p className="Header">Stock: </p>
+                    <p className="Content">{this.ChooseBook.Stock}</p>
                 </h4>
                 <p className="Header">
                     Amount:
@@ -137,6 +169,26 @@ class BookInfo extends Component {
     };
 
     render() {
+        let uid = "";
+        let islogin = false;
+        $.ajax({
+            url:"/checkstate",
+            context:document.body,
+            async:false,
+            type:"get",
+            success: function(data) {
+                if(data !== "null") {
+                    uid = data;
+                    islogin = true;
+                }
+            }
+        });
+        if(islogin) {
+            setLogin(true, uid);
+        }
+        else {
+            setLogin(false, null);
+        }
         if (this.state.redirect) {
             return (
                 <Redirect push to="/booklist"/>

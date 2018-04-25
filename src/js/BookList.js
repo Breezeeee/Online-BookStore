@@ -2,10 +2,11 @@ import React , {Component} from 'react';
 import 'file-saver';
 import '../css/css.css';
 import { Link } from 'react-router-dom';
-import {BookData} from '../Data/BookData';
+import $ from 'jquery';
+import {setLogin} from "../index";
 
-let flag = { Book: true, Author: true, Language: true, Published: true, Price: true, Sales: true };
-
+let BookData = null;
+let flag = { name: true, author: true, price: true, sales: true };
 let style = {
     backgroundColor: '#8dc63f',
     fontSize: 20,
@@ -19,11 +20,11 @@ let style = {
 class BookRow extends  Component {
     render() {
         const book = this.props.book;
-        const book_name = book.Book;
-        const book_author = book.Author;
-        const book_price = (book.Price / 100).toFixed(2);
-        const book_sales = book.Sales;
-        const book_id = book.ID;
+        const book_name = book.name;
+        const book_author = book.author;
+        const book_price = (Number(book.price) / 100).toFixed(2);
+        const book_sales = Number(book.sales);
+        const book_id = book.id;
         return(
             <tr>
                 <td>{book_name}</td>
@@ -37,7 +38,7 @@ class BookRow extends  Component {
 }
 
 function upSort(propertyName) {
-    if ((typeof BookData[0][propertyName]) !== "number") {
+    if (propertyName !== "price" && propertyName !== "sales") {
         return function(object1, object2) {
             let value1 = object1[propertyName];
             let value2 = object2[propertyName];
@@ -46,15 +47,15 @@ function upSort(propertyName) {
     }
     else {
         return function(object1, object2) {
-            let value1 = object1[propertyName];
-            let value2 = object2[propertyName];
+            let value1 = Number(object1[propertyName]);
+            let value2 = Number(object2[propertyName]);
             return value1 - value2;
         }
     }
 }
 
 function downSort(propertyName) {
-    if ((typeof BookData[0][propertyName]) !== "number") {
+    if (propertyName !== "price" && propertyName !== "sales") {
         return function(object1, object2) {
             let value1 = object1[propertyName];
             let value2 = object2[propertyName];
@@ -63,8 +64,8 @@ function downSort(propertyName) {
     }
     else {
         return function(object1, object2) {
-            let value1 = object1[propertyName];
-            let value2 = object2[propertyName];
+            let value1 = Number(object1[propertyName]);
+            let value2 = Number(object2[propertyName]);
             return value2 - value1;
         }
     }
@@ -75,11 +76,14 @@ class BookTable extends Component {
         super(props);
         this.handleClick = this.handleClick.bind(this);
         this.state = {
-            data: this.props.data
+            data: BookData
         }
     }
     handleClick(e) {
         let prop = e.target.innerHTML;
+        prop = prop.toLowerCase();
+        if(prop === "book")
+            prop = "name";
         if (flag[prop] === true)
             this.state.data.sort(upSort(prop));
         else
@@ -131,8 +135,8 @@ class SearchBar extends Component {
             <div className="SearchBarInput">
                 Search
                 <select onChange={this.handleFilterHeaderChange}>
-                    <option value="Book">Book</option>
-                    <option value="Author">Author</option>
+                    <option value="name">Book</option>
+                    <option value="author">Author</option>
                 </select>
                 <input type="text" placeholder="Keyword" value={this.props.filterText} onChange={this.handleFilterTextChange} />
             </div>
@@ -178,7 +182,7 @@ class Export extends Component{
 class FilterableBookTable extends Component {
     constructor(props){
         super(props);
-        this.state = {filterText: '', filterHeader: 'Book'};
+        this.state = {filterText: '', filterHeader: 'name'};
         this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
         this.handleFilterHeaderChange = this.handleFilterHeaderChange.bind(this);
     }
@@ -192,7 +196,7 @@ class FilterableBookTable extends Component {
         return (
             <div>
                 <SearchBar filterText={this.state.filterText} onFilterTextChange={this.handleFilterTextChange} onFilterHeaderChange={this.handleFilterHeaderChange} />
-                <BookTable data={this.props.data} filterText={this.state.filterText} filterHeader={this.state.filterHeader} />
+                <BookTable filterText={this.state.filterText} filterHeader={this.state.filterHeader} />
                 <div className="export">
                     <Export />
                 </div>
@@ -203,9 +207,37 @@ class FilterableBookTable extends Component {
 
 class BookList extends Component {
     render() {
+        let uid = "";
+        let islogin = false;
+        $.ajax({
+            url:"/checkstate",
+            context:document.body,
+            async:false,
+            type:"get",
+            success: function(data) {
+                if(data !== "null") {
+                    uid = data;
+                    islogin = true;
+                }
+            }
+        });
+        if(islogin) {
+            setLogin(true, uid);
+        }
+        else {
+            setLogin(false, null);
+        }
+        $.ajax({
+            url:"/allbook",
+            context:document.body,
+            async:false,
+            type:"get",
+            success:function(data){
+                BookData = $.parseJSON(data);
+            }
+        });
         return (
-
-            <FilterableBookTable data={BookData} />
+            <FilterableBookTable/>
         );
     }
 }

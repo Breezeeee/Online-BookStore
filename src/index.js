@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import React, {Component} from'react';
 import { BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import './css/css.css';
+import $ from 'jquery';
 
 import Home from './js/Home';
 import BookList from './js/BookList';
@@ -23,18 +24,18 @@ let style = {
 };
 
 let isLogin = false;
-let LoginID = '';
-let setLogin = function (value, ID) {
+let LoginUid = '';
+let setLogin = function (value, Uid) {
     isLogin = value;
     if(isLogin)
-        LoginID = ID;
+        LoginUid = Uid;
 };
 class LoginButton extends Component {
     render() {
         return (
-        isLogin?
+            isLogin?
             <div className="Link3">
-                <Link to={{pathname:"/profile", state:{userid: LoginID}}} style={style}>Profile</Link>
+                <Link to={{pathname:"/profile", state:{userid: LoginUid}}} style={style}>Profile</Link>
                 <Link to={{pathname:"/cart"}} style={style}>Cart</Link>
             </div>
             :
@@ -47,6 +48,26 @@ class LoginButton extends Component {
 
 class OnlineBookStore extends Component {
     render() {
+        let uid = "";
+        let islogin = false;
+        $.ajax({
+            url:"/checkstate",
+            context:document.body,
+            async:false,
+            type:"get",
+            success: function(data) {
+                if(data !== "null") {
+                    uid = data;
+                    islogin = true;
+                }
+            }
+        });
+        if(islogin) {
+            setLogin(true, uid);
+        }
+        else {
+            setLogin(false, null);
+        }
         return (
             <Router>
                 <div>
@@ -75,4 +96,4 @@ class OnlineBookStore extends Component {
 ReactDOM.render(<OnlineBookStore/>, document.getElementById('root'));
 registerServiceWorker();
 
-export {setLogin}
+export {setLogin, isLogin, LoginUid}

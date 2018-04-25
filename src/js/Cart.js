@@ -1,8 +1,9 @@
 import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
+import $ from 'jquery';
 
-import {CartData} from "../Data/CartData";
+import {LoginUid} from "../index";
 
 let style = {
     backgroundColor: '#8dc63f',
@@ -13,40 +14,14 @@ let style = {
     borderRadius: 5,
     color: '#fff'
 };
-let style2 = {
-    backgroundColor: '#8dc63f',
-    fontSize: 20,
-    fontWeight: 300,
-    height: 30,
-    padding: '0 1vmin',
-    borderRadius: 5,
-    color: '#fff'
-};
+
 class CartRow extends  Component {
     constructor(props) {
         super(props);
         this.setAmount = this.setAmount.bind(this);
-        this.Add = this.Add.bind(this);
-        this.Minus = this.Minus.bind(this);
         this.state = {amount: this.props.book.num};
     }
-    Add() {
-        let num = document.getElementById("numwant");
-        let want_amount = parseInt(num.value) + 1;
-        let book_left = this.props.book.Left;
-        if(want_amount > book_left)
-            want_amount = book_left;
-        this.setState({amount: want_amount});
-        num.value = want_amount;
-    }
-    Minus() {
-        let num = document.getElementById("numwant");
-        let want_amount = parseInt(num.value) - 1;
-        if(want_amount === 0)
-            want_amount = 1;
-        this.setState({amount: want_amount});
-        num.value = want_amount;
-    }
+    Book = {name:"", bid:"", price:0, stock:0, num:0, subtotal:0};
     setAmount(e) {
         let flag = true;
         let want_amount = e.target.value;
@@ -56,60 +31,82 @@ class CartRow extends  Component {
         }
         if(!flag)
             want_amount = this.state.amount;
-        let book_left = this.props.book.Left;
+        let book_left = this.Book.stock;
         if(want_amount > book_left) {
             want_amount = book_left;
             e.target.value = want_amount;
         }
-        if(want_amount === "") {
+        if(want_amount === "" || want_amount === 0) {
             want_amount = 1;
             e.target.value = want_amount;
         }
         this.setState({amount: want_amount});
+        $.ajax({
+            url:"/citem",
+            data:{
+                uid:LoginUid,
+                bid:this.Book.bid,
+                num:want_amount
+            },
+            context:document.body,
+            async:true,
+            type:"get"
+        });
+        this.Book.subtotal = (this.state.amount * this.Book.price / 100).toFixed(2);
+        window.location.reload();
     };
+
     render() {
         const book = this.props.book;
-        const book_name = book.Book;
-        const book_author = book.Author;
-        const book_price = (book.Price / 100).toFixed(2);
-        const book_num = book.num;
-        const total_price = (book.Price * book_num /100).toFixed(2);
+        this.Book.name = book.bname;
+        this.Book.bid = book.bid;
+        this.Book.price = (Number(book.price) / 100).toFixed(2);
+        this.Book.num = Number(book.num);
+        this.Book.subtotal = (Number(book.price) * Number(book.num) /100).toFixed(2);
+        this.Book.stock= Number(book.stock);
         return(
             <tr>
-                <td>{book_name}</td>
-                <td>{book_author}</td>
-                <td>{book_price}</td>
+                <td>{this.Book.name}</td>
+                <td>{this.Book.price}</td>
                 <td>
-                    <button style={style2} onClick={this.Minus}>-</button>
-                    <input id="numwant" type="text" placeholder={book_num} value={this.state.amount} onChange={this.setAmount}/>
-                    <button style={style2} onClick={this.Add}>+</button>
+                    <input id={this.Book.bid} type="number" placeholder={this.Book.num} value={this.state.amount} onChange={this.setAmount}/>
                 </td>
-                <td>{total_price}</td>
+                <td>{this.Book.subtotal}</td>
             </tr>
         );
     }
 }
 
 class CartList extends Component {
-    constructor() {
-        super();
-        this.state = {data: CartData};
-    }
+
     render() {
         const rows = [];
-        this.state.data.forEach(book => {
-            if(book.num !== 0)
-                rows.push(<CartRow book={book}/>)
+        let books = null;
+        $.ajax({
+            url:"/qcart",
+            data:{
+                uid:LoginUid
+            },
+            context:document.body,
+            async:false,
+            type:"get",
+            success:function(data) {
+                if(data !== "null") {
+                    books = $.parseJSON(data);
+                }
+            }
+        });
+        books.forEach(book => {
+            rows.push(<CartRow book={book}/>)
         });
         return (
             <table>
                 <thead>
                 <tr>
                     <th className="t1">Book</th>
-                    <th className="t2">Author</th>
                     <th className="t4">Price</th>
                     <th className="t4">Amount</th>
-                    <th className="t4">Total</th>
+                    <th className="t4">SubTotal</th>
                 </tr>
                 </thead>
                 <tbody>{rows}</tbody>
