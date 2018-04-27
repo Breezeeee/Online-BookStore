@@ -3,6 +3,7 @@ import React, {Component} from'react';
 import { BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import './css/css.css';
 import $ from 'jquery';
+import {style} from "./js/style";
 
 import Home from './js/Home';
 import BookList from './js/BookList';
@@ -11,31 +12,20 @@ import Login from './js/Login'
 import Profile from './js/Profile';
 import Cart from './js/Cart';
 import BookInfo from './js/BookInfo';
+import Signup from './js/Signup';
+import CreateOrder from './js/CreateOrder';
 import registerServiceWorker from './registerServiceWorker';
 
-let style = {
-    backgroundColor: '#8dc63f',
-    fontSize: 20,
-    fontWeight: 500,
-    height: 52,
-    padding: '0 3vmin',
-    borderRadius: 5,
-    color: '#fff'
-};
-
 let isLogin = false;
-let LoginUid = '';
-let setLogin = function (value, Uid) {
+let setLogin = function (value) {
     isLogin = value;
-    if(isLogin)
-        LoginUid = Uid;
 };
 class LoginButton extends Component {
     render() {
         return (
             isLogin?
             <div className="Link3">
-                <Link to={{pathname:"/profile", state:{userid: LoginUid}}} style={style}>Profile</Link>
+                <Link to={{pathname:"/profile"}} style={style}>Profile</Link>
                 <Link to={{pathname:"/cart"}} style={style}>Cart</Link>
             </div>
             :
@@ -48,7 +38,6 @@ class LoginButton extends Component {
 
 class OnlineBookStore extends Component {
     render() {
-        let uid = "";
         let islogin = false;
         $.ajax({
             url:"/checkstate",
@@ -57,16 +46,15 @@ class OnlineBookStore extends Component {
             type:"get",
             success: function(data) {
                 if(data !== "null") {
-                    uid = data;
                     islogin = true;
                 }
             }
         });
         if(islogin) {
-            setLogin(true, uid);
+            setLogin(true);
         }
         else {
-            setLogin(false, null);
+            setLogin(false);
         }
         return (
             <Router>
@@ -87,6 +75,8 @@ class OnlineBookStore extends Component {
                     <Route path="/profile" component={Profile}/>
                     <Route path="/cart" component={Cart}/>
                     <Route path="/bookinfo" component={BookInfo}/>
+                    <Route path="/signup" component={Signup}/>
+                    <Route path="/createorder" component={CreateOrder}/>
                 </div>
             </Router>
         );
@@ -96,4 +86,4 @@ class OnlineBookStore extends Component {
 ReactDOM.render(<OnlineBookStore/>, document.getElementById('root'));
 registerServiceWorker();
 
-export {setLogin, isLogin, LoginUid}
+export {setLogin, isLogin}

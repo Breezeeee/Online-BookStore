@@ -3,25 +3,28 @@ import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
 
-import {LoginUid} from "../index";
-
-let style = {
-    backgroundColor: '#8dc63f',
-    fontSize: 20,
-    fontWeight: 500,
-    height: 52,
-    padding: '0 3vmin',
-    borderRadius: 5,
-    color: '#fff'
-};
+import {style} from "./style";
 
 class CartRow extends  Component {
     constructor(props) {
         super(props);
+        this.delBook = this.delBook.bind(this);
         this.setAmount = this.setAmount.bind(this);
         this.state = {amount: this.props.book.num};
     }
     Book = {name:"", bid:"", price:0, stock:0, num:0, subtotal:0};
+    delBook() {
+        $.ajax({
+            url:"/ditem",
+            data:{
+                bid:this.Book.bid
+            },
+            context:document.body,
+            async:false,
+            type:"get"
+        });
+        window.location.reload();
+    }
     setAmount(e) {
         let flag = true;
         let want_amount = e.target.value;
@@ -44,7 +47,6 @@ class CartRow extends  Component {
         $.ajax({
             url:"/citem",
             data:{
-                uid:LoginUid,
                 bid:this.Book.bid,
                 num:want_amount
             },
@@ -72,21 +74,20 @@ class CartRow extends  Component {
                     <input id={this.Book.bid} type="number" placeholder={this.Book.num} value={this.state.amount} onChange={this.setAmount}/>
                 </td>
                 <td>{this.Book.subtotal}</td>
+                <td className="t4">
+                    <button style={style} onClick={this.delBook}>delete</button>
+                </td>
             </tr>
         );
     }
 }
 
 class CartList extends Component {
-
     render() {
         const rows = [];
         let books = null;
         $.ajax({
             url:"/qcart",
-            data:{
-                uid:LoginUid
-            },
             context:document.body,
             async:false,
             type:"get",
@@ -118,8 +119,12 @@ class CartList extends Component {
 class Cart extends Component {
     constructor() {
         super();
-        this.state = {redirect: false};
+        this.state = {redirect: false, redirect2: false};
     }
+
+    handleCreateOrderClick = () => {
+        this.setState({redirect2: true});
+    };
 
     handleCancelClick = () => {
         this.setState({redirect: true});
@@ -131,10 +136,16 @@ class Cart extends Component {
                 <Redirect push to="/booklist"/>
             );
         }
+        if (this.state.redirect2) {
+            return(
+                <Redirect push to="/createorder"/>
+            );
+        }
         return (
             <div>
                 <CartList/>
                 <div className="Button">
+                    <button style={style} onClick={this.handleCreateOrderClick}>Create Order</button>
                     <button style={style} onClick={this.handleCancelClick}>Back to BookList</button>
                 </div>
             </div>

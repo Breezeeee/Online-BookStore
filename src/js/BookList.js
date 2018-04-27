@@ -4,18 +4,10 @@ import '../css/css.css';
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
 import {setLogin} from "../index";
+import {style} from "./style";
 
 let BookData = null;
 let flag = { name: true, author: true, price: true, sales: true };
-let style = {
-    backgroundColor: '#8dc63f',
-    fontSize: 20,
-    fontWeight: 500,
-    height: 52,
-    padding: '0 3vmin',
-    borderRadius: 5,
-    color: '#fff'
-};
 
 class BookRow extends  Component {
     render() {
@@ -207,7 +199,6 @@ class FilterableBookTable extends Component {
 
 class BookList extends Component {
     render() {
-        let uid = "";
         let islogin = false;
         $.ajax({
             url:"/checkstate",
@@ -216,16 +207,15 @@ class BookList extends Component {
             type:"get",
             success: function(data) {
                 if(data !== "null") {
-                    uid = data;
                     islogin = true;
                 }
             }
         });
         if(islogin) {
-            setLogin(true, uid);
+            setLogin(true);
         }
         else {
-            setLogin(false, null);
+            setLogin(false);
         }
         $.ajax({
             url:"/allbook",

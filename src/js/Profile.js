@@ -4,28 +4,18 @@ import '../css/css.css';
 import $ from 'jquery';
 
 import {setLogin} from "../index";
-
-let style = {
-    backgroundColor: '#8dc63f',
-    fontSize: 20,
-    fontWeight: 500,
-    height: 52,
-    padding: '0 3vmin',
-    borderRadius: 5,
-    color: '#fff'
-};
+import {style} from "./style";
 
 class UserInfo extends Component {
 
-    UserProfile = {PassWord: '', Username: '', Email: '', PhoneNumber: 0};
-
-    render() {
+    constructor(props) {
+        super(props);
+        this.setPassword = this.setPassword.bind(this);
+        this.setEmail = this.setEmail.bind(this);
+        this.setPhonenumber = this.setPhonenumber.bind(this);
         let user = null;
         $.ajax({
             url:"/quser",
-            data:{
-                id:this.props.UserID
-            },
             context:document.body,
             async:false,
             type:"get",
@@ -35,29 +25,79 @@ class UserInfo extends Component {
                 }
             }
         });
-        this.UserProfile.PassWord = user.password;
-        this.UserProfile.Username = user.username;
-        this.UserProfile.Email = user.email;
-        this.UserProfile.PhoneNumber = user.phonenumber;
+        this.state = {username:user.username, password:user.password, email:user.email, phonenumber:user.phonenumber};
+    }
+
+    setPassword(e) {
+        this.setState({password : e.target.value});
+    }
+    setEmail(e) {
+        this.setState({email : e.target.value});
+    }
+    setPhonenumber(e) {
+        this.setState({phonenumber : e.target.value});
+    }
+
+    handleModifyClick = () => {
+        let new_password = this.state.password;
+        let new_email = this.state.email;
+        let new_phonenumber = this.state.phonenumber;
+        let re1 =  /^[0-9a-zA-Z]*$/g;
+        let err = "";
+        if(!re1.test(new_password)) {
+            err += "password must contain both letters and numbers\n";
+        }
+        let re2 = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        if(!re2.test(new_email)) {
+            err += "invalid email format\n";
+        }
+        let re3=/^(1+\d{10})$/;
+        if(!re3.test(new_phonenumber)) {
+            err += "invalid phonenumber";
+        }
+        if(err !== "") {
+            alert(err);
+        }
+        else {
+            $.ajax({
+                url:"/cuser",
+                data:{
+                    username:this.state.username,
+                    password:new_password,
+                    email:new_email,
+                    phonenumber:new_phonenumber
+                },
+                context:document.body,
+                async:false,
+                type:"get"
+            });
+            alert("Modify success");
+        }
+    };
+
+    render() {
 
         return (
             <div className="Inf">
                 <h4>
                     <p className="Header">Username: </p>
-                    <p className="Content">{this.UserProfile.Username}</p>
+                    <p className="Content">{this.state.username}</p>
                 </h4>
                 <h4>
                     <p className="Header">PassWord: </p>
-                    <p className="Content">{this.UserProfile.PassWord}</p>
+                    <input className="ContentInput" type="password" value={this.state.password} onChange={this.setPassword}/>
                 </h4>
                 <h4>
                     <p className="Header">Email: </p>
-                    <p className="Content">{this.UserProfile.Email}</p>
+                    <input className="ContentInput" type="text" value={this.state.email} onChange={this.setEmail}/>
                 </h4>
                 <h4>
                     <p className="Header">PhoneNumber: </p>
-                    <p className="Content">{this.UserProfile.PhoneNumber}</p>
+                    <input className="ContentInput" type="text" value={this.state.phonenumber} onChange={this.setPhonenumber}/>
                 </h4>
+                <div className="Button3">
+                    <button style={style} onClick={this.handleModifyClick}>Modify</button>
+                </div>
             </div>
         );
     }
@@ -82,13 +122,12 @@ class Profile extends Component {
                 async: false,
                 type: "get"
             });
-            setLogin(false, null);
+            setLogin(false);
             this.setState({redirect: true});
         }
     };
 
     render() {
-        let uid = "";
         let islogin = false;
         $.ajax({
             url:"/checkstate",
@@ -97,16 +136,15 @@ class Profile extends Component {
             type:"get",
             success: function(data) {
                 if(data !== "null") {
-                    uid = data;
                     islogin = true;
                 }
             }
         });
         if(islogin) {
-            setLogin(true, uid);
+            setLogin(true);
         }
         else {
-            setLogin(false, null);
+            setLogin(false);
         }
         if (this.state.redirect) {
             return (
@@ -115,7 +153,7 @@ class Profile extends Component {
         }
         return (
             <div>
-                <UserInfo UserID={this.props.location.state.userid}/>
+                <UserInfo/>
                 <div className="Button">
                     <button style={style} onClick={this.handleCancelClick}>Back</button>
                     <button style={style} onClick={this.handleLogoutClick}>Logout</button>

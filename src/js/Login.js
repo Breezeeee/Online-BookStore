@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link} from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
 
@@ -20,7 +20,6 @@ class Login extends Component {
     }
     handleConfirmClick = () => {
         let success = false;
-        let uid = "";
         $.ajax({
             url:"/userlogin",
             data:{
@@ -33,13 +32,12 @@ class Login extends Component {
             success: function(data) {
                 if(data !== "null") {
                     success = true;
-                    uid = data;
                 }
             }
         });
         if(success) {
             alert("Login Success !");
-            setLogin(true, uid);
+            setLogin(true);
             this.setState({redirect: true});
         }
         else {
@@ -51,7 +49,6 @@ class Login extends Component {
     };
 
     render() {
-        let uid = "";
         let islogin = false;
         $.ajax({
             url:"/checkstate",
@@ -60,16 +57,15 @@ class Login extends Component {
             type:"get",
             success: function(data) {
                 if(data !== "null") {
-                    uid = data;
                     islogin = true;
                 }
             }
         });
         if(islogin) {
-            setLogin(true, uid);
+            setLogin(true);
         }
         else {
-            setLogin(false, null);
+            setLogin(false);
         }
         if (this.state.redirect) {
             return (
@@ -89,6 +85,9 @@ class Login extends Component {
                 <div>
                     <button onClick={this.handleConfirmClick} className="Button1">Confirm</button>
                     <button onClick={this.handleCancelClick} className="Button2">Cancel</button>
+                </div>
+                <div className="Link4">
+                    <Link to="/signup">New user?</Link>
                 </div>
             </div>
         );

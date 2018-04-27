@@ -3,16 +3,7 @@ import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 
 import {BookData, Sell} from "../Data/BookData";
-
-let style = {
-    backgroundColor: '#8dc63f',
-    fontSize: 20,
-    fontWeight: 500,
-    height: 52,
-    padding: '0 3vmin',
-    borderRadius: 5,
-    color: '#fff'
-};
+import {style} from "./style";
 
 class BookInfo extends Component {
     constructor(props) {

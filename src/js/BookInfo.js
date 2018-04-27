@@ -3,26 +3,8 @@ import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
 
-import {isLogin, LoginUid, setLogin} from "../index";
-
-let style = {
-    backgroundColor: '#8dc63f',
-    fontSize: 20,
-    fontWeight: 500,
-    height: 52,
-    padding: '0 3vmin',
-    borderRadius: 5,
-    color: '#fff'
-};
-let style2 = {
-    backgroundColor: '#8dc63f',
-    fontSize: 20,
-    fontWeight: 300,
-    height: 30,
-    padding: '0 1vmin',
-    borderRadius: 5,
-    color: '#fff'
-};
+import {isLogin, setLogin} from "../index";
+import {style, style2} from "./style";
 
 class Information extends Component {
     constructor(props) {
@@ -81,7 +63,6 @@ class Information extends Component {
             $.ajax({
                 url:"/saveitem2",
                 data:{
-                    uid: LoginUid,
                     bid: this.ChooseBook.ID,
                     num: want_amount
                 },
@@ -169,7 +150,6 @@ class BookInfo extends Component {
     };
 
     render() {
-        let uid = "";
         let islogin = false;
         $.ajax({
             url:"/checkstate",
@@ -178,16 +158,15 @@ class BookInfo extends Component {
             type:"get",
             success: function(data) {
                 if(data !== "null") {
-                    uid = data;
                     islogin = true;
                 }
             }
         });
         if(islogin) {
-            setLogin(true, uid);
+            setLogin(true);
         }
         else {
-            setLogin(false, null);
+            setLogin(false);
         }
         if (this.state.redirect) {
             return (

@@ -24,6 +24,11 @@ body {
     margin-right: 20vmin;
 }
 
+.Link4 {
+    margin-top: 2vmin;
+    margin-left: 10vmin;
+}
+
 table{
     align-content: center;
     width: 150vmin;
@@ -126,7 +131,9 @@ th {
     margin-top: 10vmin;
     margin-right: 20vmin;
 }
-
+.Button3 {
+    text-align: center;
+}
 .Inf {
     margin-left: 20vmin;
     margin-top: 8vmin;
@@ -136,5 +143,8 @@ th {
 }
 .Content {
     font-size: 20px;
+    margin-left: 10vmin;
+}
+.ContentInput {
     margin-left: 10vmin;
 }
