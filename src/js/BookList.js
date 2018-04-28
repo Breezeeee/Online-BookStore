@@ -180,11 +180,11 @@ class SearchPrice extends Component {
     }
     render() {
         return (
-            <div className="SearchBarInput">
+            <div className="SearchBarInput2">
                 Price
-                <input type="text" placeholder="Lowest Price" value={this.props.price1} onChange={this.handlePrice1Change} />
+                <input type="text" placeholder="Lowest" value={this.props.price1} onChange={this.handlePrice1Change} />
                 -
-                <input type="text" placeholder="Highest Price" value={this.props.price2} onChange={this.handlePrice2Change} />
+                <input type="text" placeholder="Highest" value={this.props.price2} onChange={this.handlePrice2Change} />
             </div>
         );
     }
@@ -249,8 +249,8 @@ class FilterableBookTable extends Component {
     render() {
         return (
             <div>
-                <SearchBar filterText={this.state.filterText} onFilterTextChange={this.handleFilterTextChange} onFilterHeaderChange={this.handleFilterHeaderChange} />
                 <SearchPrice price1={this.state.price1} price2={this.state.price2} onPrice1Change={this.handlePrice1Change} onPrice2Change={this.handlePrice2Change}/>
+                <SearchBar filterText={this.state.filterText} onFilterTextChange={this.handleFilterTextChange} onFilterHeaderChange={this.handleFilterHeaderChange} />
                 <BookTable filterText={this.state.filterText} filterHeader={this.state.filterHeader} price1={this.state.price1} price2={this.state.price2}/>
                 <div className="export">
                     <Export />

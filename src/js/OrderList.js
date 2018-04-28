@@ -56,14 +56,13 @@ class OrderRow extends Component {
         const order_id = order.id;
         const order_total = (Number(order.total) / 100).toFixed(2);
         const order_date = order.date;
+        const order_info = "OrderID: " + order_id + "    Date: " + order_date + "    Total: " + order_total + "    ";
         return(
             <div>
-                    <tr>
-                        <td0>OrderID:{order_id}</td0>
-                        <td0>Total:{order_total}</td0>
-                        <td0>Date:{order_date}</td0>
-                        <td0><Link to={{pathname:"/orderinfo", state:{oid: order_id}}} style={style}>MoreInfo</Link></td0>
-                    </tr>
+                <table>
+                <td0>{order_info}</td0>
+                <td0><Link to={{pathname:"/orderinfo", state:{oid: order_id}}} style={style}>MoreInfo</Link></td0>
+                <div>
                     <tr>
                         <th className="t1">Book</th>
                         <th className="t5">Author</th>
@@ -71,7 +70,9 @@ class OrderRow extends Component {
                         <th className="t4">Number</th>
                         <th className="t4">SubTotal</th>
                     </tr>
-                    <SubItem oid={order_id}/>
+                <SubItem oid={order_id}/>
+                </div>
+                </table>
             </div>
         );
     }
@@ -106,7 +107,7 @@ class SearchBar extends Component {
     }
     render() {
         return (
-            <div className="SearchBarInput">
+            <div className="SearchBarInput2">
                 Search
                 <input type="text" placeholder="OrderID" value={this.props.filterText} onChange={this.handleFilterTextChange} />
             </div>

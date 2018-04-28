@@ -33,8 +33,8 @@ table{
     align-content: center;
     width: 150vmin;
     float: top;
-    margin-left: 20vmin;
-    margin-top: 10vmin;
+    margin-left: 15vmin;
+    margin-top: 5vmin;
     font-family: verdana,arial,sans-serif;
     font-size: 2.5vmin;
     color:#333333;
@@ -96,12 +96,28 @@ th {
 }
 .SearchBarInput input {
     border: 2vmin solid #7BA7AB;
+    width: 10vmin;
     font-size: 15px;
     border-radius: 5vmin;
     background: #F9F0DA;
     color: #9E9C9C;
 }
-
+.SearchBarInput2 {
+    text-align: right;
+    margin-right: 10vmin;
+    float: right;
+    border-radius: 5vmin;
+    font-size: 22px;
+    background: #A3D0C3;
+}
+.SearchBarInput2 input {
+    border: 2vmin solid #7BA7AB;
+    width: 10vmin;
+    font-size: 15px;
+    border-radius: 5vmin;
+    background: #F9F0DA;
+    color: #9E9C9C;
+}
 .export {
     text-align: right;
     margin-right: 20vmin;
