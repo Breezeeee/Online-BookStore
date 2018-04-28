@@ -61,6 +61,9 @@ tr {
 .t4 {
     width: 10vmin;
 }
+.t5 {
+    width: 27vmin;
+}
 td {
     border-width: 0.2vmin;
     padding: 10px;
@@ -78,8 +81,8 @@ th {
     background-color: #ffffff;
 }
 .SearchBarInput {
+    text-align: right;
     float: right;
-    margin-right: 20vmin;
     border-radius: 5vmin;
     font-size: 22px;
     background: #A3D0C3;
@@ -87,7 +90,6 @@ th {
 .SearchBarInput select {
     border: 2vmin solid #A3D0C3;
     font-size: 15px;
-    margin-left: 1vmin;
     border-radius: 5vmin;
     background: #F9F0DA;
     color: #9E9C9C;
@@ -138,6 +140,9 @@ th {
     margin-left: 20vmin;
     margin-top: 8vmin;
 }
+.OrderInf {
+    margin-left: 50vmin;
+}
 .Header {
     font-size: 22px;
 }
@@ -147,4 +152,9 @@ th {
 }
 .ContentInput {
     margin-left: 10vmin;
+}
+.CreateOrder {
+    text-align: right;
+    margin-right: 30vmin;
+    margin-top: 5vmin;
 }

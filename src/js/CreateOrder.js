@@ -59,7 +59,7 @@ class ItemList extends Component {
                         <tbody>{rows}</tbody>
                     </table>
                 </div>
-                <h2>Total: {total}</h2>
+                <h2 className={"CreateOrder"}>Total: {total}</h2>
             </div>
         );
     }
@@ -69,7 +69,7 @@ class CreateOrder extends Component {
     constructor() {
         super();
         this.setAddress = this.setAddress.bind(this);
-        this.state = ({address:"", redirect:false, redirect2:false});
+        this.state = ({address:"", redirect:false, redirect2:false, oid:""});
     }
 
     setAddress(e) {
@@ -83,6 +83,7 @@ class CreateOrder extends Component {
             alert("Address can't be empty");
         }
         else {
+            let orderid = "";
             $.ajax({
                 url:"/saveorder",
                 data:{
@@ -90,9 +91,12 @@ class CreateOrder extends Component {
                 },
                 context:document.body,
                 async:false,
-                type:"get"
+                type:"get",
+                success:function(data) {
+                    orderid = data;
+                }
             });
-            this.setState({redirect2: true});
+            this.setState({redirect2: true, oid: orderid});
             alert("Success!");
         }
     };
@@ -104,17 +108,17 @@ class CreateOrder extends Component {
         }
         if(this.state.redirect2) {
             return(
-                <Redirect push to="/booklist"/>
+                <Redirect to={{pathname:"/orderinfo", state:{oid:this.state.oid}}}/>
             );
         }
         return(
             <div>
                 <ItemList/>
-                <div>
+                <h3 className="CreateOrder">
                     Address:
                     <input type="text" value={this.state.address} onChange={this.setAddress}/>
-                </div>
-                <div>
+                </h3>
+                <div className="Button">
                     <button style={style} onClick={this.handleConfirmClick}>Confirm</button>
                     <button style={style} onClick={this.handleCancelClick}>Cancel</button>
                 </div>

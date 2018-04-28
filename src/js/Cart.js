@@ -123,7 +123,22 @@ class Cart extends Component {
     }
 
     handleCreateOrderClick = () => {
-        this.setState({redirect2: true});
+        let success = true;
+        $.ajax({
+            url:"/checkcart",
+            context:document.body,
+            async:false,
+            type:"get",
+            success:function(data) {
+                if(data === "false") {
+                    success = false;
+                }
+            }
+        });
+        if(!success)
+            alert("Cart can't be empty");
+        else
+            this.setState({redirect2: true});
     };
 
     handleCancelClick = () => {

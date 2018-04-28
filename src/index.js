@@ -7,13 +7,14 @@ import {style} from "./js/style";
 
 import Home from './js/Home';
 import BookList from './js/BookList';
-import Purchase from './js/Purchase';
 import Login from './js/Login'
 import Profile from './js/Profile';
 import Cart from './js/Cart';
 import BookInfo from './js/BookInfo';
 import Signup from './js/Signup';
 import CreateOrder from './js/CreateOrder';
+import OrderList from './js/OrderList';
+import OrderInfo from './js/OrderInfo';
 import registerServiceWorker from './registerServiceWorker';
 
 let isLogin = false;
@@ -27,6 +28,7 @@ class LoginButton extends Component {
             <div className="Link3">
                 <Link to={{pathname:"/profile"}} style={style}>Profile</Link>
                 <Link to={{pathname:"/cart"}} style={style}>Cart</Link>
+                <Link to={{pathname:"/orderlist"}} style={style}>Order</Link>
             </div>
             :
             <div className="Link3">
@@ -70,13 +72,14 @@ class OnlineBookStore extends Component {
                     <hr/>
                     <Route  exact path="/" component={Home}/>
                     <Route path="/booklist" component={BookList}/>
-                    <Route path="/purchase" component={Purchase}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/profile" component={Profile}/>
                     <Route path="/cart" component={Cart}/>
                     <Route path="/bookinfo" component={BookInfo}/>
                     <Route path="/signup" component={Signup}/>
                     <Route path="/createorder" component={CreateOrder}/>
+                    <Route path="/orderlist" component={OrderList}/>
+                    <Route path="/orderinfo" component={OrderInfo}/>
                 </div>
             </Router>
         );
