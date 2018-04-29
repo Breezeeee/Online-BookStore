@@ -15,24 +15,39 @@ import Signup from './js/Signup';
 import CreateOrder from './js/CreateOrder';
 import OrderList from './js/OrderList';
 import OrderInfo from './js/OrderInfo';
+import Admin from './js/Admin';
 import registerServiceWorker from './registerServiceWorker';
 
 let isLogin = false;
+let isAdmin = false;
 let setLogin = function (value) {
     isLogin = value;
 };
+let setAdmin = function (value) {
+    isAdmin = value;
+};
 class LoginButton extends Component {
     render() {
+        if(!isLogin)
+            return(
+                <div className="Link3">
+                    <Link to="/login" style={style}>Login</Link>
+                </div>
+            );
+        if(!isAdmin)
+            return(
+                <div className="Link3">
+                    <Link to={{pathname:"/profile"}} style={style}>Profile</Link>
+                    <Link to={{pathname:"/cart"}} style={style}>Cart</Link>
+                    <Link to={{pathname:"/orderlist"}} style={style}>Order</Link>
+                </div>
+            );
         return (
-            isLogin?
             <div className="Link3">
+                <Link to={{pathname:"/admin"}} style={style}>Manage</Link>
                 <Link to={{pathname:"/profile"}} style={style}>Profile</Link>
                 <Link to={{pathname:"/cart"}} style={style}>Cart</Link>
                 <Link to={{pathname:"/orderlist"}} style={style}>Order</Link>
-            </div>
-            :
-            <div className="Link3">
-                <Link to="/login" style={style}>Login</Link>
             </div>
         );
     }
@@ -80,6 +95,7 @@ class OnlineBookStore extends Component {
                     <Route path="/createorder" component={CreateOrder}/>
                     <Route path="/orderlist" component={OrderList}/>
                     <Route path="/orderinfo" component={OrderInfo}/>
+                    <Route path="/admin" component={Admin}/>
                 </div>
             </Router>
         );
@@ -89,4 +105,4 @@ class OnlineBookStore extends Component {
 ReactDOM.render(<OnlineBookStore/>, document.getElementById('root'));
 registerServiceWorker();
 
-export {setLogin, isLogin}
+export {setLogin, isLogin, setAdmin}

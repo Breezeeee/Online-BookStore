@@ -174,3 +174,11 @@ th {
     margin-right: 30vmin;
     margin-top: 5vmin;
 }
+.Sidebar {
+    float: left;
+    margin-left: 10vmin;
+}
+.ShowRight {
+    float: left;
+    margin-left: 20vmin;
+}

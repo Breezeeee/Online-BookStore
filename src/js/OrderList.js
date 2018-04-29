@@ -1,6 +1,6 @@
 import React , {Component} from 'react';
 import '../css/css.css';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import $ from 'jquery';
 import {setLogin} from "../index";
 import {style} from "./style";
@@ -135,6 +135,10 @@ class FilterableOrderTable extends Component {
 }
 
 class OrderList extends Component {
+    constructor() {
+        super();
+        this.state = {redirect:false};
+    }
     render() {
         let islogin = false;
         $.ajax({
@@ -153,6 +157,8 @@ class OrderList extends Component {
         }
         else {
             setLogin(false);
+            alert("Please login first");
+            this.setState({redirect:true});
         }
         let allOrders = null;
         $.ajax({
@@ -164,6 +170,10 @@ class OrderList extends Component {
                 allOrders = $.parseJSON(data);
             }
         });
+        if(this.state.redirect)
+            return(
+                <Redirect push to="/login"/>
+            );
         return (
             <FilterableOrderTable orders={allOrders}/>
         );

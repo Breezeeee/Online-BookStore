@@ -4,6 +4,7 @@ import '../css/css.css';
 import $ from 'jquery';
 
 import {style} from "./style";
+import {setLogin} from "../index";
 
 class CartRow extends  Component {
     constructor(props) {
@@ -119,7 +120,7 @@ class CartList extends Component {
 class Cart extends Component {
     constructor() {
         super();
-        this.state = {redirect: false, redirect2: false};
+        this.state = {redirect: false, redirect2: false, redirect3: false};
     }
 
     handleCreateOrderClick = () => {
@@ -146,6 +147,26 @@ class Cart extends Component {
     };
 
     render() {
+        let islogin = false;
+        $.ajax({
+            url:"/checkstate",
+            context:document.body,
+            async:false,
+            type:"get",
+            success: function(data) {
+                if(data !== "null") {
+                    islogin = true;
+                }
+            }
+        });
+        if(islogin) {
+            setLogin(true);
+        }
+        else {
+            setLogin(false);
+            alert("Please login first");
+            this.setState({redirect3:true});
+        }
         if (this.state.redirect) {
             return (
                 <Redirect push to="/booklist"/>
@@ -154,6 +175,11 @@ class Cart extends Component {
         if (this.state.redirect2) {
             return(
                 <Redirect push to="/createorder"/>
+            );
+        }
+        if (this.state.redirect3) {
+            return(
+                <Redirect push to="/login"/>
             );
         }
         return (

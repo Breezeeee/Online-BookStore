@@ -3,7 +3,7 @@ import { Redirect, Link} from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
 
-import {setLogin} from "../index";
+import {setAdmin, setLogin} from "../index";
 
 class Login extends Component {
     constructor() {
@@ -19,7 +19,7 @@ class Login extends Component {
         this.setState({filterPassWord:e.target.value});
     }
     handleConfirmClick = () => {
-        let success = false;
+        let success = 0;
         $.ajax({
             url:"/userlogin",
             data:{
@@ -31,18 +31,30 @@ class Login extends Component {
             type:"get",
             success: function(data) {
                 if(data !== "null") {
-                    success = true;
+                    if(data === "false")
+                        success = 1;
+                    else if (data === "admin")
+                        success = 3;
+                    else
+                        success = 2;
                 }
             }
         });
-        if(success) {
+        if(success === 2) {
             alert("Login Success !");
             setLogin(true);
             this.setState({redirect: true});
         }
-        else {
-            alert("Failed, please try again.");
+        else if(success === 1)
+            alert("The account is banned.");
+        else if(success === 3) {
+            alert("Login Success !");
+            setLogin(true);
+            setAdmin(true);
+            this.setState({redirect: true});
         }
+        else
+            alert("Failed, please try again.");
     };
     handleCancelClick = () => {
         this.setState({redirect: true});

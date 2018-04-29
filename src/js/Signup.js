@@ -50,8 +50,26 @@ class Signup extends Component {
                 }
             }
         });
-        let re1 =  /^[0-9a-zA-Z]*$/g;
-        if(!re1.test(new_password)) {
+        let p_valid = 0;
+        for(let i = 0; i < new_password.length; i++) {
+            if(new_password.charAt(i) > '0' && new_password.charAt(i) < '9') {
+                if(p_valid === 0)
+                    p_valid = 1;
+                if(p_valid === 2) {
+                    p_valid = 3;
+                    break;
+                }
+            }
+            if((new_password.charAt(i) > 'a' && new_password.charAt(i) < 'z') || (new_password.charAt(i) > 'A' && new_password.charAt(i) < 'Z')) {
+                if(p_valid === 0)
+                    p_valid = 2;
+                if(p_valid === 1) {
+                    p_valid = 3;
+                    break;
+                }
+            }
+        }
+        if(p_valid !== 3) {
             err += "password must contain both letters and numbers\n";
         }
         let re2 = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
