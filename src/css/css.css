@@ -180,5 +180,8 @@ th {
 }
 .ShowRight {
     float: left;
+}
+.MoreSearch {
     margin-left: 20vmin;
+    margin-top: 5vmin;
 }

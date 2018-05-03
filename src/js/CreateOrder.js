@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
 import {style} from "./style";
+import {setAdmin, setLogin} from "../index";
 
 class ItemRow extends Component {
     Book = {name:"", price:0, num:0, subtotal:0};
@@ -69,7 +70,7 @@ class CreateOrder extends Component {
     constructor() {
         super();
         this.setAddress = this.setAddress.bind(this);
-        this.state = ({address:"", redirect:false, redirect2:false, oid:""});
+        this.state = ({address:"", redirect:false, redirect2:false, oid:"", redirect3: false});
     }
 
     setAddress(e) {
@@ -101,6 +102,36 @@ class CreateOrder extends Component {
         }
     };
     render() {
+        let islogin = false;
+        let isAdmin = false;
+        $.ajax({
+            url:"/checkstate",
+            context:document.body,
+            async:false,
+            type:"get",
+            success: function(data) {
+                if(data !== "null") {
+                    islogin = true;
+                }
+                if(data === "admin") {
+                    isAdmin = true;
+                }
+            }
+        });
+        if(islogin) {
+            setLogin(true);
+        }
+        else {
+            setLogin(false);
+            alert("Please login first");
+            this.setState({redirect3:true});
+        }
+        if(isAdmin) {
+            setAdmin(true);
+        }
+        else {
+            setAdmin(false);
+        }
         if(this.state.redirect) {
             return(
                 <Redirect push to="/cart"/>
@@ -109,6 +140,11 @@ class CreateOrder extends Component {
         if(this.state.redirect2) {
             return(
                 <Redirect to={{pathname:"/orderinfo", state:{oid:this.state.oid}}}/>
+            );
+        }
+        if (this.state.redirect3) {
+            return(
+                <Redirect push to="/login"/>
             );
         }
         return(

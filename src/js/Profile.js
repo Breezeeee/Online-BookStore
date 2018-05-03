@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
 
-import {setLogin} from "../index";
+import {setAdmin, setLogin} from "../index";
 import {style} from "./style";
 
 class UserInfo extends Component {
@@ -147,6 +147,7 @@ class Profile extends Component {
 
     render() {
         let islogin = false;
+        let isAdmin = false;
         $.ajax({
             url:"/checkstate",
             context:document.body,
@@ -156,6 +157,9 @@ class Profile extends Component {
                 if(data !== "null") {
                     islogin = true;
                 }
+                if(data === "admin") {
+                    isAdmin = true;
+                }
             }
         });
         if(islogin) {
@@ -163,6 +167,12 @@ class Profile extends Component {
         }
         else {
             setLogin(false);
+        }
+        if(isAdmin) {
+            setAdmin(true);
+        }
+        else {
+            setAdmin(false);
         }
         if (this.state.redirect) {
             return (

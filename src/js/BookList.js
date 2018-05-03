@@ -3,7 +3,7 @@ import 'file-saver';
 import '../css/css.css';
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
-import {setLogin} from "../index";
+import {setAdmin, setLogin} from "../index";
 import {style} from "./style";
 
 let BookData = null;
@@ -263,6 +263,7 @@ class FilterableBookTable extends Component {
 class BookList extends Component {
     render() {
         let islogin = false;
+        let isAdmin = false;
         $.ajax({
             url:"/checkstate",
             context:document.body,
@@ -272,6 +273,9 @@ class BookList extends Component {
                 if(data !== "null") {
                     islogin = true;
                 }
+                if(data === "admin") {
+                    isAdmin = true;
+                }
             }
         });
         if(islogin) {
@@ -279,6 +283,12 @@ class BookList extends Component {
         }
         else {
             setLogin(false);
+        }
+        if(isAdmin) {
+            setAdmin(true);
+        }
+        else {
+            setAdmin(false);
         }
         $.ajax({
             url:"/allbook",

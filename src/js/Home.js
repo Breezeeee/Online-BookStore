@@ -3,7 +3,7 @@ import { Carousel } from 'react-responsive-carousel';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
-import {setLogin} from "../index";
+import {setAdmin, setLogin} from "../index";
 import $ from "jquery";
 
 class DemoCarousel extends Component {
@@ -38,8 +38,8 @@ class DemoCarousel extends Component {
 
 class Home extends Component {
     render() {
-        let uid = "";
         let islogin = false;
+        let isAdmin = false;
         $.ajax({
             url:"/checkstate",
             context:document.body,
@@ -47,16 +47,24 @@ class Home extends Component {
             type:"get",
             success: function(data) {
                 if(data !== "null") {
-                    uid = data;
                     islogin = true;
+                }
+                if(data === "admin") {
+                    isAdmin = true;
                 }
             }
         });
         if(islogin) {
-            setLogin(true, uid);
+            setLogin(true);
         }
         else {
-            setLogin(false, null);
+            setLogin(false);
+        }
+        if(isAdmin) {
+            setAdmin(true);
+        }
+        else {
+            setAdmin(false);
         }
         return (
             <div>

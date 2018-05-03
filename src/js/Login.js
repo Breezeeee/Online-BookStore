@@ -62,6 +62,7 @@ class Login extends Component {
 
     render() {
         let islogin = false;
+        let isAdmin = false;
         $.ajax({
             url:"/checkstate",
             context:document.body,
@@ -71,6 +72,9 @@ class Login extends Component {
                 if(data !== "null") {
                     islogin = true;
                 }
+                if(data === "admin") {
+                    isAdmin = true;
+                }
             }
         });
         if(islogin) {
@@ -78,6 +82,12 @@ class Login extends Component {
         }
         else {
             setLogin(false);
+        }
+        if(isAdmin) {
+            setAdmin(true);
+        }
+        else {
+            setAdmin(false);
         }
         if (this.state.redirect) {
             return (

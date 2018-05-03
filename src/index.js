@@ -56,6 +56,7 @@ class LoginButton extends Component {
 class OnlineBookStore extends Component {
     render() {
         let islogin = false;
+        let isAdmin = false;
         $.ajax({
             url:"/checkstate",
             context:document.body,
@@ -65,6 +66,9 @@ class OnlineBookStore extends Component {
                 if(data !== "null") {
                     islogin = true;
                 }
+                if(data === "admin") {
+                    isAdmin = true;
+                }
             }
         });
         if(islogin) {
@@ -72,6 +76,12 @@ class OnlineBookStore extends Component {
         }
         else {
             setLogin(false);
+        }
+        if(isAdmin) {
+            setAdmin(true);
+        }
+        else {
+            setAdmin(false);
         }
         return (
             <Router>

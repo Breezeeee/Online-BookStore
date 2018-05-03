@@ -237,14 +237,6 @@ class BanUser extends Component {
     }
 }
 
-class QueryUser extends Component {
-    render() {
-        return(
-            <h3>Coming Soon</h3>
-        );
-    }
-}
-
 class AddBook extends Component {
     constructor() {
         super();
@@ -718,14 +710,9 @@ class ManageUser extends Component {
                 <DeleteUser/>
             );
         }
-        // if(this.props.op === "ban") {
-            return(
-                <BanUser/>
-            );
-        // }
-        // return(
-        //     <QueryUser/>
-        // );
+        return(
+            <BanUser/>
+        );
     }
 }
 
@@ -751,11 +738,205 @@ class ManageBook extends Component {
         );
     }
 }
+class StatRow extends Component {
+
+    render() {
+        const order = this.props.order;
+        return(
+            <tr>
+                <td>{order.OrderID}</td>
+                <td>{order.BookName}</td>
+                <td>{order.Author}</td>
+                <td>{order.Username}</td>
+                <td>{order.Date}</td>
+                <td>{order.Num}</td>
+                <td>{(order.Subtotal/100).toFixed(2)}</td>
+            </tr>
+        );
+    }
+}
+
+class StatTable extends Component {
+    render() {
+        const rows = [];
+        let total = 0;
+        this.props.orders.forEach((order) => {
+            rows.push(<StatRow order={order}/>);
+            total += order.Num;
+        });
+        return(
+            <div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th className="t1">OrderID</th>
+                        <th className="t1">BookName</th>
+                        <th className="t2">Author</th>
+                        <th className="t3">Username</th>
+                        <th className="t2">Date</th>
+                        <th className="t4">Num</th>
+                        <th className="t4">Subtotal</th>
+                    </tr>
+                    </thead>
+                    <tbody>{rows}</tbody>
+                </table>
+                <h2 className={"CreateOrder"}>TotalNum:{total}</h2>
+            </div>
+        )
+    }
+}
+
+class SearchStat extends Component {
+    constructor(props) {
+        super(props);
+        this.handleFilterBookChange = this.handleFilterBookChange.bind(this);
+        this.handleFilterAuthorChange = this.handleFilterAuthorChange.bind(this);
+        this.handleFilterUserChange = this.handleFilterUserChange.bind(this);
+        this.handleDate1Change = this.handleDate1Change.bind(this);
+        this.handleDate2Change = this.handleDate2Change.bind(this);
+    }
+    handleFilterBookChange(e) {
+        this.props.onFilterBookChange(e.target.value);
+    }
+    handleFilterAuthorChange(e) {
+        this.props.onFilterAuthorChange(e.target.value);
+    }
+    handleFilterUserChange(e) {
+        this.props.onFilterUserChange(e.target.value);
+    }
+    handleDate1Change(e) {
+        this.props.onDate1Change(e.target.value);
+    }
+    handleDate2Change(e) {
+        this.props.onDate2Change(e.target.value);
+    }
+    render() {
+        return (
+            <div>
+                Book
+                <input type="text" placeholder="Book" value={this.props.filterBook} onChange={this.handleFilterBookChange} />
+                Author
+                <input type="text" placeholder="Author" value={this.props.filterAuthor} onChange={this.handleFilterAuthorChange} />
+                User
+                <input type="text" placeholder="User" value={this.props.filterUser} onChange={this.handleFilterUserChange} />
+                Date
+                <input type="datetime-local" placeholder="from" value={this.props.date1} onChange={this.handleDate1Change}/>
+                -
+                <input type="datetime-local" placeholder="to" value={this.props.date2} onChange={this.handleDate2Change}/>
+            </div>
+        );
+    }
+}
+
+class FilterableStatTable extends Component {
+    constructor(props){
+        super(props);
+        this.state = {stats:props.StatData, filterBook:'', filterAuthor:'', filterUser:'', date1:'2018-01-01T00:00', date2:'2020-01-01T00:00'};
+        this.handleFilterUserChange = this.handleFilterUserChange.bind(this);
+        this.handleFilterBookChange = this.handleFilterBookChange.bind(this);
+        this.handleFilterAuthorChange = this.handleFilterAuthorChange.bind(this);
+        this.handleFilterDate1Change = this.handleFilterDate1Change.bind(this);
+        this.handleFilterDate2Change = this.handleFilterDate2Change.bind(this);
+    }
+    handleFilterUserChange(filterText) {
+        this.setState({ filterUser: filterText });
+    }
+    handleFilterBookChange(filterText) {
+        this.setState({ filterBook: filterText });
+    }
+    handleFilterAuthorChange(filterText) {
+        this.setState({ filterAuthor: filterText });
+    }
+    handleFilterDate1Change(filterText) {
+        this.setState({ date1: filterText });
+    }
+    handleFilterDate2Change(filterText) {
+        this.setState({ date2: filterText });
+    }
+    handleConfirmClick = () => {
+        const book = this.state.filterBook;
+        const author = this.state.filterAuthor;
+        const username = this.state.filterUser;
+        let date1 = this.state.date1;
+        let date2 = this.state.date2;
+        const Date1 = date1.split('T');
+        const Date2 = date2.split('T');
+        date1 = Date1[0] + " " + Date1[1] + ":00";
+        date2 = Date2[0] + " " + Date2[1] + ":00";
+        let Stats = null;
+        $.ajax({
+            url:"/statistics",
+            data:{
+                date1:date1,
+                date2:date2,
+                book:book,
+                author:author,
+                username:username
+            },
+            context:document.body,
+            async:false,
+            type:"get",
+            success:function(data){
+                Stats = $.parseJSON(data);
+            }
+        });
+        this.setState({stats: Stats});
+    };
+    handleClearClick = () => {
+        let Stat = null;
+        $.ajax({
+            url:"/statistics",
+            data:{
+                book:"",
+                author:"",
+                username:"",
+                date1:"2018-01-01 00:00:00",
+                date2:"2020-01-01 00:00:00"
+            },
+            context:document.body,
+            async:false,
+            type:"get",
+            success: function(data) {
+                Stat = $.parseJSON(data);
+            }
+        });
+        this.setState({stats:Stat, filterBook:'', filterAuthor:'', filterUser:'', date1:'2018-01-01T00:00', date2:'2020-01-01T00:00'});
+    };
+    render() {
+        return(
+            <div>
+                <div className="MoreSearch">
+                    <SearchStat filterBook={this.state.filterBook} filterAuthor={this.state.filterAuthor} filterUser={this.state.filterUser} date1={this.state.date1} date2={this.state.date2} onDate1Change={this.handleFilterDate1Change} onDate2Change={this.handleFilterDate2Change} onFilterUserChange={this.handleFilterUserChange} onFilterBookChange={this.handleFilterBookChange} onFilterAuthorChange={this.handleFilterAuthorChange}/>
+                    <button onClick={this.handleConfirmClick}>Confirm</button>
+                    <button onClick={this.handleClearClick}>Clear</button>
+                </div>
+                <StatTable orders={this.state.stats}/>
+            </div>
+        );
+    }
+}
 
 class ManageSales extends Component {
     render() {
+        let stat = null;
+        $.ajax({
+            url:"/statistics",
+            data:{
+                book:"",
+                author:"",
+                username:"",
+                date1:"2018-01-01 00:00:00",
+                date2:"2020-01-01 00:00:00"
+            },
+            context:document.body,
+            async:false,
+            type:"get",
+            success: function(data) {
+                stat = $.parseJSON(data);
+            }
+        });
         return(
-            <h3>Coming Soon</h3>
+            <FilterableStatTable StatData={stat}/>
         );
     }
 }
@@ -835,12 +1016,11 @@ class Admin extends Component {
                         <dd><a href="#" onClick={this.ChangeObjOp.bind(this,"user","add")}>Add user</a></dd>
                         <dd><a href="#" onClick={this.ChangeObjOp.bind(this,"user","delete")}>Delete user</a></dd>
                         <dd><a href="#" onClick={this.ChangeObjOp.bind(this,"user","ban")}>Ban user</a></dd>
-                        <dd><a href="#" onClick={this.ChangeObjOp.bind(this,"user","query")}>Query user</a></dd>
                     </dl>
-                    {/*<dl>*/}
-                        {/*<dt>Sales statistics</dt>*/}
-                        {/*<dd><a href="#" onClick={this.ChangeObjOp.bind(this,"sales","query")}>Statistics</a></dd>*/}
-                    {/*</dl>*/}
+                    <dl>
+                        <dt>Sales statistics</dt>
+                        <dd><a href="#" onClick={this.ChangeObjOp.bind(this,"sales","query")}>Statistics</a></dd>
+                    </dl>
                 </div>
                 <div className="ShowRight">
                     <Manage obj={this.obj} op={this.op}/>

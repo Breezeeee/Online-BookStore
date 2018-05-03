@@ -4,7 +4,7 @@ import '../css/css.css';
 import $ from 'jquery';
 
 import {style} from "./style";
-import {setLogin} from "../index";
+import {setAdmin, setLogin} from "../index";
 
 class CartRow extends  Component {
     constructor(props) {
@@ -148,6 +148,7 @@ class Cart extends Component {
 
     render() {
         let islogin = false;
+        let isAdmin = false;
         $.ajax({
             url:"/checkstate",
             context:document.body,
@@ -156,6 +157,9 @@ class Cart extends Component {
             success: function(data) {
                 if(data !== "null") {
                     islogin = true;
+                }
+                if(data === "admin") {
+                    isAdmin = true;
                 }
             }
         });
@@ -166,6 +170,12 @@ class Cart extends Component {
             setLogin(false);
             alert("Please login first");
             this.setState({redirect3:true});
+        }
+        if(isAdmin) {
+            setAdmin(true);
+        }
+        else {
+            setAdmin(false);
         }
         if (this.state.redirect) {
             return (
