@@ -2,9 +2,9 @@ import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
+import {Button} from 'react-bootstrap';
 
 import {setAdmin, setLogin} from "../index";
-import {style} from "./style";
 
 class ItemRow extends Component {
     render() {
@@ -152,7 +152,7 @@ class OrderInfo extends Component {
             <div>
                 <Information OrderID={this.props.location.state.oid}/>
                 <div className="Button">
-                    <button style={style} onClick={this.handleCancelClick}>Back</button>
+                    <Button bsStyle="primary" onClick={this.handleCancelClick}>Back</Button>
                 </div>
             </div>
         );

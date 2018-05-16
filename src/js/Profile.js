@@ -2,9 +2,8 @@ import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
-
+import {Button} from 'react-bootstrap';
 import {setAdmin, setLogin} from "../index";
-import {style} from "./style";
 
 class UserInfo extends Component {
 
@@ -114,7 +113,7 @@ class UserInfo extends Component {
                     <input className="ContentInput" type="text" value={this.state.phonenumber} onChange={this.setPhonenumber}/>
                 </h4>
                 <div className="Button3">
-                    <button style={style} onClick={this.handleModifyClick}>Modify</button>
+                    <Button bsStyle="success" onClick={this.handleModifyClick}>Modify</Button>
                 </div>
             </div>
         );
@@ -183,8 +182,8 @@ class Profile extends Component {
             <div>
                 <UserInfo/>
                 <div className="Button">
-                    <button style={style} onClick={this.handleCancelClick}>Back</button>
-                    <button style={style} onClick={this.handleLogoutClick}>Logout</button>
+                    <Button bsStyle="primary" onClick={this.handleCancelClick}>Back</Button>
+                    <Button bsStyle="primary" onClick={this.handleLogoutClick}>Logout</Button>
                 </div>
             </div>
         );

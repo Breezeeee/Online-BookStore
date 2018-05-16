@@ -25,10 +25,10 @@ class DemoCarousel extends Component {
         }
         return (
             <Carousel autoPlay style={styles} showThumbs={false} infiniteLoop={true} interval={3000}>
-                <div onClick={this.handleImg1Click}>
+                <div>
                     <img alt="page1" src={require("../img/page1.jpg")}/>
                 </div>
-                <div onClick={this.handleImg2Click}>
+                <div>
                     <img alt="page2" src={require("../img/page2.jpg")}/>
                 </div>
             </Carousel>

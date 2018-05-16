@@ -2,8 +2,8 @@ import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
+import {Button} from 'react-bootstrap';
 
-import {style} from "./style";
 import {setAdmin, setLogin} from "../index";
 
 class CartRow extends  Component {
@@ -11,7 +11,7 @@ class CartRow extends  Component {
         super(props);
         this.delBook = this.delBook.bind(this);
         this.setAmount = this.setAmount.bind(this);
-        this.state = {amount: this.props.book.num};
+        this.state = {amount: 0};
     }
     Book = {name:"", bid:"", price:0, stock:0, num:0, subtotal:0};
     delBook() {
@@ -67,6 +67,7 @@ class CartRow extends  Component {
         this.Book.num = Number(book.num);
         this.Book.subtotal = (Number(book.price) * Number(book.num) /100).toFixed(2);
         this.Book.stock= Number(book.stock);
+        this.setState({amount:this.Book.num});
         return(
             <tr>
                 <td>{this.Book.name}</td>
@@ -76,7 +77,7 @@ class CartRow extends  Component {
                 </td>
                 <td>{this.Book.subtotal}</td>
                 <td className="t4">
-                    <button style={style} onClick={this.delBook}>delete</button>
+                    <Button bsStyle="primary" onClick={this.delBook}>delete</Button>
                 </td>
             </tr>
         );
@@ -196,8 +197,8 @@ class Cart extends Component {
             <div>
                 <CartList/>
                 <div className="Button">
-                    <button style={style} onClick={this.handleCreateOrderClick}>Create Order</button>
-                    <button style={style} onClick={this.handleCancelClick}>Back to BookList</button>
+                    <Button bsStyle="primary" onClick={this.handleCreateOrderClick}>Create Order</Button>
+                    <Button bsStyle="primary" onClick={this.handleCancelClick}>Back to BookList</Button>
                 </div>
             </div>
         );

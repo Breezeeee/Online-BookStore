@@ -3,7 +3,7 @@ import '../css/css.css';
 import { Link, Redirect } from 'react-router-dom';
 import $ from 'jquery';
 import {setAdmin, setLogin} from "../index";
-import {style} from "./style";
+import {Button} from 'react-bootstrap';
 
 class ItemRow extends Component {
     render() {
@@ -61,7 +61,9 @@ class OrderRow extends Component {
             <div>
                 <table>
                 <td0>{order_info}</td0>
-                <td0><Link to={{pathname:"/orderinfo", state:{oid: order_id}}} style={style}>MoreInfo</Link></td0>
+                <td0>
+                    <Button><Link to={{pathname:"/orderinfo", state:{oid: order_id}}}>MoreInfo</Link></Button>
+                </td0>
                 <div>
                     <tr>
                         <th className="t1">Book</th>
@@ -225,7 +227,7 @@ class FilterableOrderTable extends Component {
                 <div>
                     <div className="MoreSearch">
                         <SearchBar filterText={this.state.filterText} onFilterTextChange={this.handleFilterTextChange}/>
-                        <button onClick={this.handleMoreClick}>More</button>
+                        <Button bsStyle="primary" onClick={this.handleMoreClick}>More</Button>
                     </div>
                     <OrderTable orders={this.props.orders} filterText={this.state.filterText}/>
                 </div>
@@ -238,9 +240,9 @@ class FilterableOrderTable extends Component {
                 </div>
                 <div className="MoreSearch">
                     <MoreSearch filterBook={this.state.filterBook} filterAuthor={this.state.filterAuthor} date1={this.state.date1} date2={this.state.date2} onDate1Change={this.handleFilterDate1Change} onDate2Change={this.handleFilterDate2Change} onFilterBookChange={this.handleFilterBookChange} onFilterAuthorChange={this.handleFilterAuthorChange}/>
-                    <button onClick={this.handleConfirmClick}>Confirm</button>
-                    <button onClick={this.handleClearClick}>Clear</button>
-                    <button onClick={this.handleLessClick}>Less</button>
+                    <Button bsStyle="success" onClick={this.handleConfirmClick}>Confirm</Button>
+                    <Button bsStyle="success" onClick={this.handleClearClick}>Clear</Button>
+                    <Button bsStyle="primary" onClick={this.handleLessClick}>Less</Button>
                 </div>
                 <OrderTable orders={this.state.orders} filterText={this.state.filterText}/>
             </div>

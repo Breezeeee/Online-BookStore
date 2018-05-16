@@ -25,8 +25,7 @@ body {
 }
 
 .Link4 {
-    margin-top: 2vmin;
-    margin-left: 10vmin;
+    margin-left: 5vmin;
 }
 
 table{
@@ -184,4 +183,11 @@ th {
 .MoreSearch {
     margin-left: 20vmin;
     margin-top: 5vmin;
+}
+.Logintext {
+    font-size: 24px;
+    margin-right: 5vmin;
+}
+.LoginInput {
+    margin-top: 2vmin;
 }

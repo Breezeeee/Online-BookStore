@@ -2,6 +2,7 @@ import React , {Component} from 'react';
 import { Redirect, Link} from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
+import {Button} from 'react-bootstrap';
 
 import {setAdmin, setLogin} from "../index";
 
@@ -97,19 +98,22 @@ class Login extends Component {
         return (
             <div className="LoginFun">
                 <div>
-                    <div>ID:</div>
-                    <input type="text" value={this.state.filterUsername} onChange={this.handleIDChange}/>
+                    <a className="Logintext">
+                        Login
+                    </a>
+                    <a className="Link4">
+                        <Link to="/signup">New user?</Link>
+                    </a>
+                </div>
+                <div className="LoginInput">
+                    <input type="text" placeholder="Username" value={this.state.filterUsername} onChange={this.handleIDChange}/>
+                </div>
+                <div className="LoginInput">
+                    <input type="password" placeholder="Password" value={this.state.filterPassWord} onChange={this.handlePasswordChange}/>
                 </div>
                 <div>
-                    <div>Password:</div>
-                    <input type="password" value={this.state.filterPassWord} onChange={this.handlePasswordChange}/>
-                </div>
-                <div>
-                    <button onClick={this.handleConfirmClick} className="Button1">Confirm</button>
-                    <button onClick={this.handleCancelClick} className="Button2">Cancel</button>
-                </div>
-                <div className="Link4">
-                    <Link to="/signup">New user?</Link>
+                    <Button onClick={this.handleConfirmClick} bsStyle="primary" className="Button1">Confirm</Button>
+                    <Button onClick={this.handleCancelClick} className="Button2">Cancel</Button>
                 </div>
             </div>
         );

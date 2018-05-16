@@ -4,7 +4,7 @@ import '../css/css.css';
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
 import {setAdmin, setLogin} from "../index";
-import {style} from "./style";
+import {Button} from 'react-bootstrap';
 
 let BookData = null;
 let flag = { name: true, author: true, price: true, sales: true };
@@ -23,7 +23,9 @@ class BookRow extends  Component {
                 <td>{book_author}</td>
                 <td>{book_price}</td>
                 <td>{book_sales}</td>
-                <td className="t3"><Link to={{pathname:"/bookinfo", state:{bookid: book_id}}} style={style}>Information</Link></td>
+                <td className="t3">
+                    <Button><Link to={{pathname:"/bookinfo", state:{bookid: book_id}}}>Information</Link></Button>
+                </td>
             </tr>
         );
     }
@@ -218,8 +220,8 @@ class Export extends Component{
     render() {
         return(
             <div>
-                <button style={style} onClick={()=>this.ExportJSON()}>Export JSON</button>
-                <button style={style} onClick={()=>this.ExportCSV()}>Export CSV</button>
+                <Button bsStyle="primary" onClick={()=>this.ExportJSON()}>Export JSON</Button>
+                <Button bsStyle="primary" onClick={()=>this.ExportCSV()}>Export CSV</Button>
             </div>
         );
     }

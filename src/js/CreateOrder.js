@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
-import {style} from "./style";
+import {Button} from 'react-bootstrap';
 import {setAdmin, setLogin} from "../index";
 
 class ItemRow extends Component {
@@ -155,8 +155,8 @@ class CreateOrder extends Component {
                     <input type="text" value={this.state.address} onChange={this.setAddress}/>
                 </h3>
                 <div className="Button">
-                    <button style={style} onClick={this.handleConfirmClick}>Confirm</button>
-                    <button style={style} onClick={this.handleCancelClick}>Cancel</button>
+                    <Button bsStyle="primary" onClick={this.handleConfirmClick}>Confirm</Button>
+                    <Button bsStyle="primary" onClick={this.handleCancelClick}>Cancel</Button>
                 </div>
             </div>
         );

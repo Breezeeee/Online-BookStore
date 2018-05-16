@@ -3,7 +3,7 @@ import React, {Component} from'react';
 import { BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import './css/css.css';
 import $ from 'jquery';
-import {style} from "./js/style";
+import {Button, ButtonToolbar} from 'react-bootstrap';
 
 import Home from './js/Home';
 import BookList from './js/BookList';
@@ -30,25 +30,39 @@ class LoginButton extends Component {
     render() {
         if(!isLogin)
             return(
-                <div className="Link3">
-                    <Link to="/login" style={style}>Login</Link>
-                </div>
+                <Button  bsStyle="link" className="Link3">
+                    <Link to="/login">Login</Link>
+                </Button>
             );
         if(!isAdmin)
             return(
-                <div className="Link3">
-                    <Link to={{pathname:"/profile"}} style={style}>Profile</Link>
-                    <Link to={{pathname:"/cart"}} style={style}>Cart</Link>
-                    <Link to={{pathname:"/orderlist"}} style={style}>Order</Link>
-                </div>
+                <ButtonToolbar className="Link3">
+                    <Button bsStyle="link">
+                        <Link to={{pathname:"/profile"}}>Profile</Link>
+                    </Button>
+                    <Button bsStyle="link">
+                        <Link to={{pathname:"/cart"}}>Cart</Link>
+                    </Button>
+                    <Button bsStyle="link">
+                        <Link to={{pathname:"/orderlist"}}>Order</Link>
+                    </Button>
+                </ButtonToolbar>
             );
         return (
-            <div className="Link3">
-                <Link to={{pathname:"/admin"}} style={style}>Manage</Link>
-                <Link to={{pathname:"/profile"}} style={style}>Profile</Link>
-                <Link to={{pathname:"/cart"}} style={style}>Cart</Link>
-                <Link to={{pathname:"/orderlist"}} style={style}>Order</Link>
-            </div>
+            <ButtonToolbar className="Link3">
+                <Button bsStyle="link">
+                    <Link to={{pathname:"/admin"}}>Manage</Link>
+                </Button>
+                <Button bsStyle="link">
+                    <Link to={{pathname:"/profile"}}>Profile</Link>
+                </Button>
+                <Button bsStyle="link">
+                    <Link to={{pathname:"/cart"}}>Cart</Link>
+                </Button>
+                <Button bsStyle="link">
+                    <Link to={{pathname:"/orderlist"}}>Order</Link>
+                </Button>
+            </ButtonToolbar>
         );
     }
 }
@@ -88,11 +102,17 @@ class OnlineBookStore extends Component {
                 <div>
                     <div>
                         <h1 className="title">Online Bookstore</h1>
-                        <LoginButton/>
                     </div>
                     <div>
-                        <Link to="/" style={style} className="Link1">Home</Link>
-                        <Link to="/booklist" style={style} className="Link2">BookList</Link>
+                        <ButtonToolbar>
+                            <LoginButton/>
+                            <Button bsStyle="link">
+                                <Link to="/" className="Link1">Home</Link>
+                            </Button>
+                            <Button bsStyle="link">
+                                <Link to="/booklist" className="Link2">BookList</Link>
+                            </Button>
+                        </ButtonToolbar>
                     </div>
                     <hr/>
                     <Route  exact path="/" component={Home}/>

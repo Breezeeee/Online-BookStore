@@ -3,7 +3,7 @@ import { Redirect, Link} from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
 import {setAdmin, setLogin} from "../index";
-import {style} from "./style";
+import {Button} from 'react-bootstrap';
 
 class AddUser extends Component {
     constructor() {
@@ -116,7 +116,7 @@ class AddUser extends Component {
                     <input className="ContentInput" type="text" value={this.state.phonenumber} onChange={this.setPhonenumber}/>
                 </h4>
                 <div className="Button3">
-                    <button style={style} onClick={this.handleConfirmClick}>Add</button>
+                    <Button bsStyle="primary" onClick={this.handleConfirmClick}>Add</Button>
                 </div>
             </div>
         );
@@ -163,7 +163,7 @@ class DeleteUser extends Component {
                     <input className="ContentInput" type="text" value={this.state.username} onChange={this.setUsername}/>
                 </h4>
                 <div className="Button3">
-                    <button style={style} onClick={this.handleConfirmClick}>Delete</button>
+                    <Button bsStyle="primary" onClick={this.handleConfirmClick}>Delete</Button>
                 </div>
             </div>
         );
@@ -229,8 +229,8 @@ class BanUser extends Component {
                     <input className="ContentInput" type="text" value={this.state.username} onChange={this.setUsername}/>
                 </h4>
                 <div className="Button3">
-                    <button style={style} onClick={this.handleBanClick}>Ban</button>
-                    <button style={style} onClick={this.handleReleaseClick}>Release</button>
+                    <Button bsStyle="primary" onClick={this.handleBanClick}>Ban</Button>
+                    <Button bsStyle="primary" onClick={this.handleReleaseClick}>Release</Button>
                 </div>
             </div>
         );
@@ -320,7 +320,7 @@ class AddBook extends Component {
                     <input className="ContentInput" type="number" value={this.state.stock} onChange={this.setStock}/>
                 </h4>
                 <div className="Button3">
-                    <button style={style} onClick={this.handleConfirmClick}>Add</button>
+                    <Button bsStyle="primary" onClick={this.handleConfirmClick}>Add</Button>
                 </div>
             </div>
         );
@@ -410,7 +410,7 @@ class UpdateBook extends Component {
                         <input className="ContentInput" type="text" value={this.state.bid} onChange={this.setBid}/>
                     </h4>
                     <div className="Button3">
-                        <button style={style} onClick={this.handleSearchClick}>Search</button>
+                        <Button bsStyle="primary" onClick={this.handleSearchClick}>Search</Button>
                     </div>
                 </div>
             );
@@ -422,7 +422,7 @@ class UpdateBook extends Component {
                     <input className="ContentInput" type="text" value={this.state.bid} onChange={this.setBid}/>
                 </h4>
                 <div className="Button3">
-                    <button style={style} onClick={this.handleSearchClick}>Search</button>
+                    <Button bsStyle="primary" onClick={this.handleSearchClick}>Search</Button>
                 </div>
                 <h4>
                     <p className="Header">BookName: </p>
@@ -449,7 +449,7 @@ class UpdateBook extends Component {
                     <input className="ContentInput" type="number" value={this.state.stock} onChange={this.setStock}/>
                 </h4>
                 <div className="Button3">
-                    <button style={style} onClick={this.handleUpdateClick}>Update</button>
+                    <Button bsStyle="primary" onClick={this.handleUpdateClick}>Update</Button>
                 </div>
             </div>
         );
@@ -496,7 +496,7 @@ class DeleteBook extends Component {
                     <input className="ContentInput" type="text" value={this.state.bid} onChange={this.setBid}/>
                 </h4>
                 <div className="Button3">
-                    <button style={style} onClick={this.handleConfirmClick}>Delete</button>
+                    <Button bsStyle="primary" onClick={this.handleConfirmClick}>Delete</Button>
                 </div>
             </div>
         );
@@ -907,8 +907,8 @@ class FilterableStatTable extends Component {
             <div>
                 <div className="MoreSearch">
                     <SearchStat filterBook={this.state.filterBook} filterAuthor={this.state.filterAuthor} filterUser={this.state.filterUser} date1={this.state.date1} date2={this.state.date2} onDate1Change={this.handleFilterDate1Change} onDate2Change={this.handleFilterDate2Change} onFilterUserChange={this.handleFilterUserChange} onFilterBookChange={this.handleFilterBookChange} onFilterAuthorChange={this.handleFilterAuthorChange}/>
-                    <button onClick={this.handleConfirmClick}>Confirm</button>
-                    <button onClick={this.handleClearClick}>Clear</button>
+                    <Button bsStyle="primary" onClick={this.handleConfirmClick}>Confirm</Button>
+                    <Button bsStyle="primary" onClick={this.handleClearClick}>Clear</Button>
                 </div>
                 <StatTable orders={this.state.stats}/>
             </div>

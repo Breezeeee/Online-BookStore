@@ -2,9 +2,10 @@ import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
+import {Button} from 'react-bootstrap';
 
 import {isLogin, setAdmin, setLogin} from "../index";
-import {style, style2} from "./style";
+// import {style, style2} from "./style";
 
 class Information extends Component {
     constructor(props) {
@@ -129,10 +130,10 @@ class Information extends Component {
                 </h4>
                 <p className="Header">
                     Amount:
-                    <button style={style2} onClick={this.Minus}>-</button>
+                    <Button bsStyle="warning" bsSize="xsmall" onClick={this.Minus}>-</Button>
                     <input id="num" type="text" placeholder="1" value={this.state.amount} onChange={this.setAmount}/>
-                    <button style={style2} onClick={this.Add}>+</button>
-                    <button style={style2} onClick={this.AddToCart}>Add to Cart</button>
+                    <Button bsStyle="warning" bsSize="xsmall" onClick={this.Add}>+</Button>
+                    <Button bsStyle="success" onClick={this.AddToCart}>Add to Cart</Button>
                 </p>
             </div>
         );
@@ -187,7 +188,7 @@ class BookInfo extends Component {
             <div>
                 <Information BookID={this.props.location.state.bookid}/>
                 <div className="Button">
-                    <button style={style} onClick={this.handleCancelClick}>Back</button>
+                    <Button bsStyle="primary" onClick={this.handleCancelClick}>Back</Button>
                 </div>
             </div>
         );
