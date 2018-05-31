@@ -3,7 +3,7 @@ import { Redirect, Link} from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
 import {setAdmin, setLogin} from "../index";
-import {Button} from 'react-bootstrap';
+import {Button, Table} from 'react-bootstrap';
 
 class AddUser extends Component {
     constructor() {
@@ -556,7 +556,7 @@ class BookTable extends Component {
             rows.push(<BookRow book={book}/>)
         });
         return(
-            <table>
+            <Table striped bordered condensed hover>
                 <thead>
                 <tr>
                     <th className="t1">ID</th>
@@ -570,7 +570,7 @@ class BookTable extends Component {
                 </tr>
                 </thead>
                 <tbody>{rows}</tbody>
-            </table>
+            </Table>
         )
     }
 }
@@ -766,7 +766,7 @@ class StatTable extends Component {
         });
         return(
             <div>
-                <table>
+                <Table striped bordered condensed hover>
                     <thead>
                     <tr>
                         <th className="t1">OrderID</th>
@@ -779,7 +779,7 @@ class StatTable extends Component {
                     </tr>
                     </thead>
                     <tbody>{rows}</tbody>
-                </table>
+                </Table>
                 <h2 className={"CreateOrder"}>TotalNum:{total}</h2>
             </div>
         )

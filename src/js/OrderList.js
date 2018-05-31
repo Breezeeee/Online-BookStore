@@ -3,7 +3,7 @@ import '../css/css.css';
 import { Link, Redirect } from 'react-router-dom';
 import $ from 'jquery';
 import {setAdmin, setLogin} from "../index";
-import {Button} from 'react-bootstrap';
+import {Button, Table} from 'react-bootstrap';
 
 class ItemRow extends Component {
     render() {
@@ -58,23 +58,25 @@ class OrderRow extends Component {
         const order_date = order.date;
         const order_info = "OrderID: " + order_id + "    Date: " + order_date + "    Total: " + order_total + "    ";
         return(
-            <div>
-                <table>
-                <td0>{order_info}</td0>
-                <td0>
-                    <Button><Link to={{pathname:"/orderinfo", state:{oid: order_id}}}>MoreInfo</Link></Button>
-                </td0>
-                <div>
-                    <tr>
-                        <th className="t1">Book</th>
-                        <th className="t5">Author</th>
-                        <th className="t4">Price</th>
-                        <th className="t4">Number</th>
-                        <th className="t4">SubTotal</th>
-                    </tr>
-                <SubItem oid={order_id}/>
+            <div className="Orders">
+                <div className="panel panel-info">
+                    <div className="panel-heading">
+                        <h3 className="panel-title">{order_info}</h3>
+                        </div>
+                    <div className="panel-body">
+                        <Table striped bordered condensed hover>
+                            <tr>
+                                <th className="t1">Book</th>
+                                <th className="t5">Author</th>
+                                <th className="t4">Price</th>
+                                <th className="t4">Number</th>
+                                <th className="t4">SubTotal</th>
+                            </tr>
+                            <SubItem oid={order_id}/>
+                        </Table>
+                        <Button><Link to={{pathname:"/orderinfo", state:{oid: order_id}}}>MoreInfo</Link></Button>
+                    </div>
                 </div>
-                </table>
             </div>
         );
     }
@@ -91,7 +93,7 @@ class OrderTable extends Component {
             rows.push(<OrderRow order={order}/>)
         });
         return(
-            <table>{rows}</table>
+            <div className="col-md-10 col-md-offset-1">{rows}</div>
         )
     }
 }

@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
-import {Button} from 'react-bootstrap';
+import {Button, Table, Col} from 'react-bootstrap';
 
 import {setAdmin, setLogin} from "../index";
 
@@ -91,14 +91,16 @@ class Information extends Component {
                         <p className="Content">{total}</p>
                     </h4>
                 </div>
-                <table>
+                <Col md={10} mdOffset={1}>
+                <Table striped bordered condensed hover>
                     <th>Book</th>
                     <th>Author</th>
                     <th>Price</th>
                     <th>Number</th>
                     <th>SubTotal</th>
                     <SubItem oid={OrderID}/>
-                </table>
+                </Table>
+                </Col>
             </div>
         );
     }

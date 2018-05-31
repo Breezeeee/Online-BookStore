@@ -28,56 +28,59 @@ body {
     margin-left: 5vmin;
 }
 
-table{
-    align-content: center;
-    width: 150vmin;
-    float: top;
-    margin-left: 15vmin;
-    margin-top: 5vmin;
-    font-family: verdana,arial,sans-serif;
-    font-size: 2.5vmin;
-    color:#333333;
-    border-color: #666666;
-    border-collapse: collapse;
-}
+/*table{*/
+    /*align-content: center;*/
+    /*width: 100vmin;*/
+    /*float: top;*/
+    /*margin-left: 15vmin;*/
+    /*margin-top: 5vmin;*/
+    /*font-family: verdana,arial,sans-serif;*/
+    /*font-size: 2.5vmin;*/
+    /*color:#333333;*/
+    /*border-color: #666666;*/
+    /*border-collapse: collapse;*/
+/*}*/
 
-tr {
-    border-width: 0.2vmin;
-    padding: 10px;
-    border-style: solid;
-    border-color: #666666;
-    background-color: #dedede;
-}
-.t1 {
-    width: 50vmin;
-}
-.t2 {
-    width: 35vmin;
-}
-.t3 {
-    width: 15vmin;
-}
-.t4 {
-    width: 10vmin;
-}
-.t5 {
-    width: 27vmin;
-}
-td {
-    border-width: 0.2vmin;
-    padding: 10px;
-    border-style: solid;
-    border-color: #666666;
-    background-color: #ffffff;
-}
-th {
+/*tr {*/
+    /*border-width: 0.2vmin;*/
+    /*padding: 10px;*/
+    /*border-style: solid;*/
+    /*border-color: #666666;*/
+    /*background-color: #dedede;*/
+/*}*/
+/*.t1 {*/
+    /*width: 30vmin;*/
+/*}*/
+/*.t2 {*/
+    /*width: 20vmin;*/
+/*}*/
+/*.t3 {*/
+    /*width: 15vmin;*/
+/*}*/
+/*.t4 {*/
+    /*width: 10vmin;*/
+/*}*/
+/*.t5 {*/
+    /*width: 27vmin;*/
+/*}*/
+/*td {*/
+    /*border-width: 0.2vmin;*/
+    /*padding: 10px;*/
+    /*border-style: solid;*/
+    /*border-color: #666666;*/
+    /*background-color: #ffffff;*/
+/*}*/
+/*th {*/
+    /*text-align: center;*/
+    /*border-width: 0.2vmin;*/
+    /*padding: 10px;*/
+    /*width: 50px;*/
+    /*border-style: solid;*/
+    /*border-color: #666666;*/
+    /*background-color: #ffffff;*/
+/*}*/
+.tables {
     text-align: center;
-    border-width: 0.2vmin;
-    padding: 10px;
-    width: 50px;
-    border-style: solid;
-    border-color: #666666;
-    background-color: #ffffff;
 }
 .SearchBarInput {
     text-align: right;
@@ -154,6 +157,9 @@ th {
 .Inf {
     margin-left: 20vmin;
     margin-top: 8vmin;
+}
+.Orders {
+    margin-top: 5vmin;
 }
 .OrderInf {
     margin-left: 50vmin;

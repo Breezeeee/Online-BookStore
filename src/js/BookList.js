@@ -4,7 +4,7 @@ import '../css/css.css';
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
 import {setAdmin, setLogin} from "../index";
-import {Button} from 'react-bootstrap';
+import {Button, Table, Col} from 'react-bootstrap';
 
 let BookData = null;
 let flag = { name: true, author: true, price: true, sales: true };
@@ -106,17 +106,20 @@ class BookTable extends Component {
             rows.push(<BookRow book={book}/>)
         });
         return(
-            <table>
+            <Col md={10} mdOffset={1}>
+            <Table striped bordered condensed hover>
                 <thead>
                 <tr>
                     <th onClick={this.handleClick} className="t1">Book</th>
                     <th onClick={this.handleClick} className="t2">Author</th>
                     <th onClick={this.handleClick} className="t4">Price</th>
                     <th onClick={this.handleClick} className="t4">Sales</th>
+                    <th>Info</th>
                 </tr>
                 </thead>
                 <tbody>{rows}</tbody>
-            </table>
+            </Table>
+            </Col>
         )
     }
 }

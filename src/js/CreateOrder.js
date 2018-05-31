@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
-import {Button} from 'react-bootstrap';
+import {Button, Table, Col} from 'react-bootstrap';
 import {setAdmin, setLogin} from "../index";
 
 class ItemRow extends Component {
@@ -47,8 +47,8 @@ class ItemList extends Component {
         total = (total / 100).toFixed(2);
         return (
             <div>
-                <div>
-                    <table>
+                <Col md={10} mdOffset={1}>
+                    <Table striped bordered condensed hover>
                         <thead>
                         <tr>
                             <th className="t1">Book</th>
@@ -58,8 +58,8 @@ class ItemList extends Component {
                         </tr>
                         </thead>
                         <tbody>{rows}</tbody>
-                    </table>
-                </div>
+                    </Table>
+                </Col>
                 <h2 className={"CreateOrder"}>Total: {total}</h2>
             </div>
         );

@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
-import {Button} from 'react-bootstrap';
+import {Button, Table, Col} from 'react-bootstrap';
 
 import {setAdmin, setLogin} from "../index";
 
@@ -11,7 +11,7 @@ class CartRow extends  Component {
         super(props);
         this.delBook = this.delBook.bind(this);
         this.setAmount = this.setAmount.bind(this);
-        this.state = {amount: 0};
+        this.state = {amount: this.props.book.num};
     }
     Book = {name:"", bid:"", price:0, stock:0, num:0, subtotal:0};
     delBook() {
@@ -56,6 +56,7 @@ class CartRow extends  Component {
             type:"get"
         });
         this.Book.subtotal = (this.state.amount * this.Book.price / 100).toFixed(2);
+
         window.location.reload();
     };
 
@@ -67,7 +68,6 @@ class CartRow extends  Component {
         this.Book.num = Number(book.num);
         this.Book.subtotal = (Number(book.price) * Number(book.num) /100).toFixed(2);
         this.Book.stock= Number(book.stock);
-        this.setState({amount:this.Book.num});
         return(
             <tr>
                 <td>{this.Book.name}</td>
@@ -103,7 +103,8 @@ class CartList extends Component {
             rows.push(<CartRow book={book}/>)
         });
         return (
-            <table>
+            <Col md={10} mdOffset={1}>
+            <Table striped bordered condensed hover>
                 <thead>
                 <tr>
                     <th className="t1">Book</th>
@@ -113,7 +114,8 @@ class CartList extends Component {
                 </tr>
                 </thead>
                 <tbody>{rows}</tbody>
-            </table>
+            </Table>
+            </Col>
         );
     }
 }
