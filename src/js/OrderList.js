@@ -3,7 +3,7 @@ import '../css/css.css';
 import { Link, Redirect } from 'react-router-dom';
 import $ from 'jquery';
 import {setAdmin, setLogin} from "../index";
-import {Button, Table} from 'react-bootstrap';
+import {Button, Table, FormGroup, ControlLabel, FormControl, Navbar} from 'react-bootstrap';
 
 class ItemRow extends Component {
     render() {
@@ -108,10 +108,13 @@ class SearchBar extends Component {
     }
     render() {
         return (
-            <div>
-                Search
-                <input type="text" placeholder="OrderID" value={this.props.filterText} onChange={this.handleFilterTextChange} />
-            </div>
+            <Navbar.Form>
+                <FormGroup>
+                    <ControlLabel>Search</ControlLabel>
+                    {' '}
+                    <FormControl type="text" placeholder="OrderID" value={this.props.filterText} onChange={this.handleFilterTextChange}/>
+                </FormGroup>
+            </Navbar.Form>
         );
     }
 }
@@ -138,16 +141,26 @@ class MoreSearch extends Component {
     }
     render() {
         return (
-            <div>
-                Book
-                <input type="text" placeholder="Book" value={this.props.filterBook} onChange={this.handleFilterBookChange} />
-                Author
-                <input type="text" placeholder="Author" value={this.props.filterAuthor} onChange={this.handleFilterAuthorChange} />
-                Date
-                <input type="datetime-local" placeholder="from" value={this.props.date1} onChange={this.handleDate1Change}/>
-                -
-                <input type="datetime-local" placeholder="to" value={this.props.date2} onChange={this.handleDate2Change}/>
-            </div>
+            <Navbar.Form>
+                <FormGroup>
+                    <ControlLabel>Book</ControlLabel>
+                    {' '}
+                    <FormControl type="text" placeholder="Book" value={this.props.filterBook} onChange={this.handleFilterBookChange}/>
+                </FormGroup>
+                <FormGroup>
+                    <ControlLabel>Author</ControlLabel>
+                    {' '}
+                    <FormControl type="text" placeholder="Author" value={this.props.filterAuthor} onChange={this.handleFilterAuthorChange}/>
+                </FormGroup>
+                <FormGroup>
+                    <ControlLabel>Date</ControlLabel>
+                    {' '}
+                    <FormControl type="datetime-local" placeholder="from" value={this.props.date1} onChange={this.handleDate1Change}/>
+                    <ControlLabel>-</ControlLabel>
+                    {' '}
+                    <FormControl type="datetime-local" placeholder="to" value={this.props.date2} onChange={this.handleDate2Change}/>
+                </FormGroup>
+            </Navbar.Form>
         );
     }
 }
@@ -243,7 +256,9 @@ class FilterableOrderTable extends Component {
                 <div className="MoreSearch">
                     <MoreSearch filterBook={this.state.filterBook} filterAuthor={this.state.filterAuthor} date1={this.state.date1} date2={this.state.date2} onDate1Change={this.handleFilterDate1Change} onDate2Change={this.handleFilterDate2Change} onFilterBookChange={this.handleFilterBookChange} onFilterAuthorChange={this.handleFilterAuthorChange}/>
                     <Button bsStyle="success" onClick={this.handleConfirmClick}>Confirm</Button>
+                    {" "}
                     <Button bsStyle="success" onClick={this.handleClearClick}>Clear</Button>
+                    {" "}
                     <Button bsStyle="primary" onClick={this.handleLessClick}>Less</Button>
                 </div>
                 <OrderTable orders={this.state.orders} filterText={this.state.filterText}/>

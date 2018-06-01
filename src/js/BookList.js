@@ -4,7 +4,7 @@ import '../css/css.css';
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
 import {setAdmin, setLogin} from "../index";
-import {Button, Table, Col} from 'react-bootstrap';
+import {Button, Table, Col, Row, Navbar, FormGroup, FormControl, ControlLabel} from 'react-bootstrap';
 
 let BookData = null;
 let flag = { name: true, author: true, price: true, sales: true };
@@ -138,14 +138,18 @@ class SearchBar extends Component {
     }
     render() {
         return (
-            <div className="SearchBarInput">
-                Search
-                <select onChange={this.handleFilterHeaderChange}>
-                    <option value="name">Book</option>
-                    <option value="author">Author</option>
-                </select>
-                <input type="text" placeholder="Keyword" value={this.props.filterText} onChange={this.handleFilterTextChange} />
-            </div>
+            <Navbar.Form>
+                <FormGroup>
+                    <ControlLabel>Search</ControlLabel>
+                    {' '}
+                    <FormControl className="SelectOption" componentClass="select" placeholder="Book" bsSize="small" onChange={this.handleFilterHeaderChange}>
+                        <option value="name">Book</option>
+                        <option value="author">Author</option>
+                    </FormControl>
+                    {' '}
+                    <FormControl type="text" placeholder="Keyword" value={this.props.filterText} onChange={this.handleFilterTextChange}/>
+                </FormGroup>
+            </Navbar.Form>
         );
     }
 }
@@ -185,12 +189,19 @@ class SearchPrice extends Component {
     }
     render() {
         return (
-            <div className="SearchBarInput2">
-                Price
-                <input type="text" placeholder="Lowest" value={this.props.price1} onChange={this.handlePrice1Change} />
-                -
-                <input type="text" placeholder="Highest" value={this.props.price2} onChange={this.handlePrice2Change} />
-            </div>
+            <Navbar.Form>
+                <FormGroup>
+                    <ControlLabel>Price</ControlLabel>
+                    {' '}
+                    <FormControl type="text" placeholder="Lowest" value={this.props.price1} onChange={this.handlePrice1Change}/>
+                </FormGroup>
+                {' '}
+                <FormGroup>
+                    <ControlLabel>-</ControlLabel>
+                    {' '}
+                    <FormControl type="text" placeholder="Highest" value={this.props.price2} onChange={this.handlePrice2Change}/>
+                </FormGroup>
+            </Navbar.Form>
         );
     }
 }
@@ -224,6 +235,7 @@ class Export extends Component{
         return(
             <div>
                 <Button bsStyle="primary" onClick={()=>this.ExportJSON()}>Export JSON</Button>
+                {" "}
                 <Button bsStyle="primary" onClick={()=>this.ExportCSV()}>Export CSV</Button>
             </div>
         );
@@ -254,12 +266,22 @@ class FilterableBookTable extends Component {
     render() {
         return (
             <div>
-                <SearchPrice price1={this.state.price1} price2={this.state.price2} onPrice1Change={this.handlePrice1Change} onPrice2Change={this.handlePrice2Change}/>
-                <SearchBar filterText={this.state.filterText} onFilterTextChange={this.handleFilterTextChange} onFilterHeaderChange={this.handleFilterHeaderChange} />
-                <BookTable filterText={this.state.filterText} filterHeader={this.state.filterHeader} price1={this.state.price1} price2={this.state.price2}/>
-                <div className="export">
-                    <Export />
-                </div>
+                <Row>
+                    <Col md={2.7} mdOffset={6}>
+                        <SearchBar filterText={this.state.filterText} onFilterTextChange={this.handleFilterTextChange} onFilterHeaderChange={this.handleFilterHeaderChange} />
+                    </Col>
+                    <Col md={3}>
+                        <SearchPrice price1={this.state.price1} price2={this.state.price2} onPrice1Change={this.handlePrice1Change} onPrice2Change={this.handlePrice2Change}/>
+                    </Col>
+                </Row>
+                <Row>
+                    <BookTable filterText={this.state.filterText} filterHeader={this.state.filterHeader} price1={this.state.price1} price2={this.state.price2}/>
+                </Row>
+                <Row>
+                    <Col md={2} mdOffset={9}>
+                        <Export />
+                    </Col>
+                </Row>
             </div>
         );
     }

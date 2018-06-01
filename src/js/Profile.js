@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
-import {Button} from 'react-bootstrap';
+import {Button, Navbar, Col, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 import {setAdmin, setLogin} from "../index";
 
 class UserInfo extends Component {
@@ -97,21 +97,29 @@ class UserInfo extends Component {
         return (
             <div className="Inf">
                 <h4>
-                    <p className="Header">Username: </p>
-                    <p className="Content">{this.state.username}</p>
+                    <p className="Header">{this.state.username}'s Profile</p>
                 </h4>
-                <h4>
-                    <p className="Header">PassWord: </p>
-                    <input className="ContentInput" type="password" value={this.state.password} onChange={this.setPassword}/>
-                </h4>
-                <h4>
-                    <p className="Header">Email: </p>
-                    <input className="ContentInput" type="text" value={this.state.email} onChange={this.setEmail}/>
-                </h4>
-                <h4>
-                    <p className="Header">PhoneNumber: </p>
-                    <input className="ContentInput" type="text" value={this.state.phonenumber} onChange={this.setPhonenumber}/>
-                </h4>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Password</ControlLabel>
+                        {" "}
+                        <FormControl type="password" value={this.state.password} onChange={this.setPassword}/>
+                    </FormGroup>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Email</ControlLabel>
+                        {" "}
+                        <FormControl type="text" value={this.state.email} onChange={this.setEmail}/>
+                    </FormGroup>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Phonenumber</ControlLabel>
+                        {" "}
+                        <FormControl type="text" value={this.state.phonenumber} onChange={this.setPhonenumber}/>
+                    </FormGroup>
+                </Navbar.Form>
                 <div className="Button3">
                     <Button bsStyle="success" onClick={this.handleModifyClick}>Modify</Button>
                 </div>
@@ -183,6 +191,7 @@ class Profile extends Component {
                 <UserInfo/>
                 <div className="Button">
                     <Button bsStyle="primary" onClick={this.handleCancelClick}>Back</Button>
+                    {" "}
                     <Button bsStyle="primary" onClick={this.handleLogoutClick}>Logout</Button>
                 </div>
             </div>

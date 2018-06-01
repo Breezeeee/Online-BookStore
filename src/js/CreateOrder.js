@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
-import {Button, Table, Col} from 'react-bootstrap';
+import {Button, Table, Col, Navbar, FormControl, ControlLabel, FormGroup} from 'react-bootstrap';
 import {setAdmin, setLogin} from "../index";
 
 class ItemRow extends Component {
@@ -150,12 +150,18 @@ class CreateOrder extends Component {
         return(
             <div>
                 <ItemList/>
-                <h3 className="CreateOrder">
-                    Address:
-                    <input type="text" value={this.state.address} onChange={this.setAddress}/>
-                </h3>
+                <Col md={2} mdOffset={9}>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Address</ControlLabel>
+                        {' '}
+                        <FormControl type="text" value={this.state.address} onChange={this.setAddress}/>
+                    </FormGroup>
+                </Navbar.Form>
+                </Col>
                 <div className="Button">
                     <Button bsStyle="primary" onClick={this.handleConfirmClick}>Confirm</Button>
+                    {" "}
                     <Button bsStyle="primary" onClick={this.handleCancelClick}>Cancel</Button>
                 </div>
             </div>

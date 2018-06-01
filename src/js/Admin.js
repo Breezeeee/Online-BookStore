@@ -3,7 +3,7 @@ import { Redirect, Link} from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
 import {setAdmin, setLogin} from "../index";
-import {Button, Table} from 'react-bootstrap';
+import {Button, Table, Col, Row, Navbar, FormControl, ControlLabel, FormGroup} from 'react-bootstrap';
 
 class AddUser extends Component {
     constructor() {
@@ -99,22 +99,34 @@ class AddUser extends Component {
     render() {
         return (
             <div className="Inf">
-                <h4>
-                    <p className="Header">Username(Can't change later): </p>
-                    <input className="ContentInput" type="text" value={this.state.username} onChange={this.setUsername}/>
-                </h4>
-                <h4>
-                    <p className="Header">PassWord: </p>
-                    <input className="ContentInput" type="password" value={this.state.password} onChange={this.setPassword}/>
-                </h4>
-                <h4>
-                    <p className="Header">Email: </p>
-                    <input className="ContentInput" type="text" value={this.state.email} onChange={this.setEmail}/>
-                </h4>
-                <h4>
-                    <p className="Header">PhoneNumber: </p>
-                    <input className="ContentInput" type="text" value={this.state.phonenumber} onChange={this.setPhonenumber}/>
-                </h4>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Username</ControlLabel>
+                        {" "}
+                        <FormControl type="text" value={this.state.username} onChange={this.setUsername}/>
+                    </FormGroup>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Password</ControlLabel>
+                        {" "}
+                        <FormControl type="password" value={this.state.password} onChange={this.setPassword}/>
+                    </FormGroup>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Email</ControlLabel>
+                        {" "}
+                        <FormControl type="text" value={this.state.email} onChange={this.setEmail}/>
+                    </FormGroup>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Phonenumber</ControlLabel>
+                        {" "}
+                        <FormControl type="text" value={this.state.phonenumber} onChange={this.setPhonenumber}/>
+                    </FormGroup>
+                </Navbar.Form>
                 <div className="Button3">
                     <Button bsStyle="primary" onClick={this.handleConfirmClick}>Add</Button>
                 </div>
@@ -158,10 +170,13 @@ class DeleteUser extends Component {
     render() {
         return (
             <div className="Inf">
-                <h4>
-                    <p className="Header">Username: </p>
-                    <input className="ContentInput" type="text" value={this.state.username} onChange={this.setUsername}/>
-                </h4>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Username</ControlLabel>
+                        {' '}
+                        <FormControl type="text" value={this.state.username} onChange={this.setUsername}/>
+                    </FormGroup>
+                </Navbar.Form>
                 <div className="Button3">
                     <Button bsStyle="primary" onClick={this.handleConfirmClick}>Delete</Button>
                 </div>
@@ -224,12 +239,16 @@ class BanUser extends Component {
     render() {
         return (
             <div className="Inf">
-                <h4>
-                    <p className="Header">Username: </p>
-                    <input className="ContentInput" type="text" value={this.state.username} onChange={this.setUsername}/>
-                </h4>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Username</ControlLabel>
+                        {' '}
+                        <FormControl type="text" value={this.state.username} onChange={this.setUsername}/>
+                    </FormGroup>
+                </Navbar.Form>
                 <div className="Button3">
                     <Button bsStyle="primary" onClick={this.handleBanClick}>Ban</Button>
+                    {" "}
                     <Button bsStyle="primary" onClick={this.handleReleaseClick}>Release</Button>
                 </div>
             </div>
@@ -295,30 +314,48 @@ class AddBook extends Component {
     render() {
         return (
             <div className="Inf">
-                <h4>
-                    <p className="Header">BookName: </p>
-                    <input className="ContentInput" type="text" value={this.state.name} onChange={this.setName}/>
-                </h4>
-                <h4>
-                    <p className="Header">Author: </p>
-                    <input className="ContentInput" type="text" value={this.state.author} onChange={this.setAuthor}/>
-                </h4>
-                <h4>
-                    <p className="Header">Language: </p>
-                    <input className="ContentInput" type="text" value={this.state.language} onChange={this.setLanguage}/>
-                </h4>
-                <h4>
-                    <p className="Header">Published: </p>
-                    <input className="ContentInput" type="text" value={this.state.published} onChange={this.setPublished}/>
-                </h4>
-                <h4>
-                    <p className="Header">Price: </p>
-                    <input className="ContentInput" type="number" value={this.state.price} onChange={this.setPrice}/>
-                </h4>
-                <h4>
-                    <p className="Header">Stock: </p>
-                    <input className="ContentInput" type="number" value={this.state.stock} onChange={this.setStock}/>
-                </h4>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>BookName</ControlLabel>
+                        {" "}
+                        <FormControl type="text" value={this.state.name} onChange={this.setName}/>
+                    </FormGroup>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Author</ControlLabel>
+                        {" "}
+                        <FormControl type="text" value={this.state.author} onChange={this.setAuthor}/>
+                    </FormGroup>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Language</ControlLabel>
+                        {" "}
+                        <FormControl type="text" value={this.state.language} onChange={this.setLanguage}/>
+                    </FormGroup>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Published</ControlLabel>
+                        {" "}
+                        <FormControl type="text" value={this.state.published} onChange={this.setPublished}/>
+                    </FormGroup>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Price</ControlLabel>
+                        {" "}
+                        <FormControl type="number" placeholder="0" value={this.state.price} onChange={this.setPrice}/>
+                    </FormGroup>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Stock</ControlLabel>
+                        {" "}
+                        <FormControl type="number" placeholder="0" value={this.state.stock} onChange={this.setStock}/>
+                    </FormGroup>
+                </Navbar.Form>
                 <div className="Button3">
                     <Button bsStyle="primary" onClick={this.handleConfirmClick}>Add</Button>
                 </div>
@@ -405,10 +442,13 @@ class UpdateBook extends Component {
         if(!this.state.showInfo) {
             return (
                 <div className="Inf">
-                    <h4>
-                        <p className="Header">BookID: </p>
-                        <input className="ContentInput" type="text" value={this.state.bid} onChange={this.setBid}/>
-                    </h4>
+                    <Navbar.Form>
+                        <FormGroup>
+                            <ControlLabel>BookID</ControlLabel>
+                            {" "}
+                            <FormControl type="text" value={this.state.bid} onChange={this.setBid}/>
+                        </FormGroup>
+                    </Navbar.Form>
                     <div className="Button3">
                         <Button bsStyle="primary" onClick={this.handleSearchClick}>Search</Button>
                     </div>
@@ -417,37 +457,58 @@ class UpdateBook extends Component {
         }
         return(
             <div className="Inf">
-                <h4>
-                    <p className="Header">BookID: </p>
-                    <input className="ContentInput" type="text" value={this.state.bid} onChange={this.setBid}/>
-                </h4>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>BookID</ControlLabel>
+                        {" "}
+                        <FormControl type="text" value={this.state.bid} onChange={this.setBid}/>
+                    </FormGroup>
+                </Navbar.Form>
                 <div className="Button3">
                     <Button bsStyle="primary" onClick={this.handleSearchClick}>Search</Button>
                 </div>
-                <h4>
-                    <p className="Header">BookName: </p>
-                    <input className="ContentInput" type="text" value={this.state.name} onChange={this.setName}/>
-                </h4>
-                <h4>
-                    <p className="Header">Author: </p>
-                    <input className="ContentInput" type="text" value={this.state.author} onChange={this.setAuthor}/>
-                </h4>
-                <h4>
-                    <p className="Header">Language: </p>
-                    <input className="ContentInput" type="text" value={this.state.language} onChange={this.setLanguage}/>
-                </h4>
-                <h4>
-                    <p className="Header">Published: </p>
-                    <input className="ContentInput" type="text" value={this.state.published} onChange={this.setPublished}/>
-                </h4>
-                <h4>
-                    <p className="Header">Price: </p>
-                    <input className="ContentInput" type="number" value={this.state.price} onChange={this.setPrice}/>
-                </h4>
-                <h4>
-                    <p className="Header">Stock: </p>
-                    <input className="ContentInput" type="number" value={this.state.stock} onChange={this.setStock}/>
-                </h4>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>BookName</ControlLabel>
+                        {" "}
+                        <FormControl type="text" value={this.state.name} onChange={this.setName}/>
+                    </FormGroup>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Author</ControlLabel>
+                        {" "}
+                        <FormControl type="text" value={this.state.author} onChange={this.setAuthor}/>
+                    </FormGroup>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Language</ControlLabel>
+                        {" "}
+                        <FormControl type="text" value={this.state.language} onChange={this.setLanguage}/>
+                    </FormGroup>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Published</ControlLabel>
+                        {" "}
+                        <FormControl type="text" value={this.state.published} onChange={this.setPublished}/>
+                    </FormGroup>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Price</ControlLabel>
+                        {" "}
+                        <FormControl type="number" placeholder="0" value={this.state.price} onChange={this.setPrice}/>
+                    </FormGroup>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Stock</ControlLabel>
+                        {" "}
+                        <FormControl type="number" placeholder="0" value={this.state.stock} onChange={this.setStock}/>
+                    </FormGroup>
+                </Navbar.Form>
                 <div className="Button3">
                     <Button bsStyle="primary" onClick={this.handleUpdateClick}>Update</Button>
                 </div>
@@ -491,10 +552,13 @@ class DeleteBook extends Component {
     render() {
         return (
             <div className="Inf">
-                <h4>
-                    <p className="Header">BookID: </p>
-                    <input className="ContentInput" type="text" value={this.state.bid} onChange={this.setBid}/>
-                </h4>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>BookID</ControlLabel>
+                        {' '}
+                        <FormControl type="text" value={this.state.bid} onChange={this.setBid}/>
+                    </FormGroup>
+                </Navbar.Form>
                 <div className="Button3">
                     <Button bsStyle="primary" onClick={this.handleConfirmClick}>Delete</Button>
                 </div>
@@ -589,16 +653,20 @@ class SearchBar extends Component {
     }
     render() {
         return (
-            <div className="SearchBarInput">
-                Search
-                <select onChange={this.handleFilterHeaderChange}>
-                    <option value="name">Book</option>
-                    <option value="author">Author</option>
-                    <option value="language">Language</option>
-                    <option value="published">Published</option>
-                </select>
-                <input type="text" placeholder="Keyword" value={this.props.filterText} onChange={this.handleFilterTextChange} />
-            </div>
+            <Navbar.Form>
+                <FormGroup>
+                    <ControlLabel>Search</ControlLabel>
+                    {' '}
+                    <FormControl className="SelectOption" componentClass="select" placeholder="Book" bsSize="small" onChange={this.handleFilterHeaderChange}>
+                        <option value="name">Book</option>
+                        <option value="author">Author</option>
+                        <option value="language">Language</option>
+                        <option value="published">Published</option>
+                    </FormControl>
+                    {' '}
+                    <FormControl type="text" placeholder="Keyword" value={this.props.filterText} onChange={this.handleFilterTextChange}/>
+                </FormGroup>
+            </Navbar.Form>
         );
     }
 }
@@ -638,12 +706,19 @@ class SearchPrice extends Component {
     }
     render() {
         return (
-            <div className="SearchBarInput2">
-                Price
-                <input type="text" placeholder="Lowest" value={this.props.price1} onChange={this.handlePrice1Change} />
-                -
-                <input type="text" placeholder="Highest" value={this.props.price2} onChange={this.handlePrice2Change} />
-            </div>
+            <Navbar.Form>
+                <FormGroup>
+                    <ControlLabel>Price</ControlLabel>
+                    {' '}
+                    <FormControl type="text" placeholder="Lowest" value={this.props.price1} onChange={this.handlePrice1Change}/>
+                </FormGroup>
+                {' '}
+                <FormGroup>
+                    <ControlLabel>-</ControlLabel>
+                    {' '}
+                    <FormControl type="text" placeholder="Highest" value={this.props.price2} onChange={this.handlePrice2Change}/>
+                </FormGroup>
+            </Navbar.Form>
         );
     }
 }
@@ -672,9 +747,17 @@ class FilterableBookTable extends Component {
     render() {
         return (
             <div>
-                <SearchPrice price1={this.state.price1} price2={this.state.price2} onPrice1Change={this.handlePrice1Change} onPrice2Change={this.handlePrice2Change}/>
-                <SearchBar filterText={this.state.filterText} onFilterTextChange={this.handleFilterTextChange} onFilterHeaderChange={this.handleFilterHeaderChange} />
-                <BookTable BookData={this.props.BookData} filterText={this.state.filterText} filterHeader={this.state.filterHeader} price1={this.state.price1} price2={this.state.price2}/>
+                <Row>
+                    <Col md={4} mdOffset={3}>
+                        <SearchBar filterText={this.state.filterText} onFilterTextChange={this.handleFilterTextChange} onFilterHeaderChange={this.handleFilterHeaderChange} />
+                    </Col>
+                    <Col md={5}>
+                        <SearchPrice price1={this.state.price1} price2={this.state.price2} onPrice1Change={this.handlePrice1Change} onPrice2Change={this.handlePrice2Change}/>
+                    </Col>
+                </Row>
+                <Row>
+                    <BookTable BookData={this.props.BookData} filterText={this.state.filterText} filterHeader={this.state.filterHeader} price1={this.state.price1} price2={this.state.price2}/>
+                </Row>
             </div>
         );
     }
@@ -907,10 +990,15 @@ class FilterableStatTable extends Component {
             <div>
                 <div className="MoreSearch">
                     <SearchStat filterBook={this.state.filterBook} filterAuthor={this.state.filterAuthor} filterUser={this.state.filterUser} date1={this.state.date1} date2={this.state.date2} onDate1Change={this.handleFilterDate1Change} onDate2Change={this.handleFilterDate2Change} onFilterUserChange={this.handleFilterUserChange} onFilterBookChange={this.handleFilterBookChange} onFilterAuthorChange={this.handleFilterAuthorChange}/>
-                    <Button bsStyle="primary" onClick={this.handleConfirmClick}>Confirm</Button>
-                    <Button bsStyle="primary" onClick={this.handleClearClick}>Clear</Button>
+                    <div className="table_button">
+                        <Button bsStyle="primary" onClick={this.handleConfirmClick}>Confirm</Button>
+                        {" "}
+                        <Button bsStyle="primary" onClick={this.handleClearClick}>Clear</Button>
+                    </div>
                 </div>
-                <StatTable orders={this.state.stats}/>
+                <div className="table_button">
+                    <StatTable orders={this.state.stats}/>
+                </div>
             </div>
         );
     }
@@ -1003,7 +1091,7 @@ class Admin extends Component {
         }
         return(
             <div>
-                <div className="Sidebar">
+                <Col md={1} mdOffset={1}>
                     <dl>
                         <dt>Manage books</dt>
                         <dd><a href="#" onClick={this.ChangeObjOp.bind(this,"book","add")}>Add book</a></dd>
@@ -1021,10 +1109,10 @@ class Admin extends Component {
                         <dt>Sales statistics</dt>
                         <dd><a href="#" onClick={this.ChangeObjOp.bind(this,"sales","query")}>Statistics</a></dd>
                     </dl>
-                </div>
-                <div className="ShowRight">
+                </Col>
+                <Col md={9}>
                     <Manage obj={this.obj} op={this.op}/>
-                </div>
+                </Col>
             </div>
         );
     }

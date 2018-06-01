@@ -2,10 +2,9 @@ import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
-import {Button} from 'react-bootstrap';
+import {Button, Navbar, FormGroup, ControlLabel, FormControl, Col, Row} from 'react-bootstrap';
 
 import {isLogin, setAdmin, setLogin} from "../index";
-// import {style, style2} from "./style";
 
 class Information extends Component {
     constructor(props) {
@@ -103,7 +102,7 @@ class Information extends Component {
         }
 
         return (
-            <div className="Inf">
+            <Col md={3} mdOffset={5}>
                 <h4>
                     <p className="Header">Name: </p>
                     <p className="Content">{this.ChooseBook.Book}</p>
@@ -128,14 +127,18 @@ class Information extends Component {
                     <p className="Header">Stock: </p>
                     <p className="Content">{this.ChooseBook.Stock}</p>
                 </h4>
-                <p className="Header">
-                    Amount:
-                    <Button bsStyle="warning" bsSize="xsmall" onClick={this.Minus}>-</Button>
-                    <input id="num" type="text" placeholder="1" value={this.state.amount} onChange={this.setAmount}/>
-                    <Button bsStyle="warning" bsSize="xsmall" onClick={this.Add}>+</Button>
-                    <Button bsStyle="success" onClick={this.AddToCart}>Add to Cart</Button>
-                </p>
-            </div>
+                <Navbar.Form>
+                    <FormGroup>
+                        <ControlLabel>Amount</ControlLabel>
+                        {' '}
+                        <Button bsStyle="warning" bsSize="small" onClick={this.Minus}>-</Button>
+                        <FormControl id="num" type="text" placeholder="1" value={this.state.amount} onChange={this.setAmount}/>
+                        <Button bsStyle="warning" bsSize="small" onClick={this.Add}>+</Button>
+                        {'  '}
+                        <Button bsStyle="warning" onClick={this.AddToCart}>Add to Cart</Button>
+                    </FormGroup>
+                </Navbar.Form>
+            </Col>
         );
     }
 }
@@ -186,10 +189,14 @@ class BookInfo extends Component {
         }
         return (
             <div>
-                <Information BookID={this.props.location.state.bookid}/>
-                <div className="Button">
-                    <Button bsStyle="primary" onClick={this.handleCancelClick}>Back</Button>
-                </div>
+                <Row>
+                    <Information BookID={this.props.location.state.bookid}/>
+                </Row>
+                <Row>
+                    <Col md={1} mdOffset={10}>
+                        <Button bsStyle="primary" onClick={this.handleCancelClick}>Back</Button>
+                    </Col>
+                </Row>
             </div>
         );
     }

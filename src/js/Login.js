@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import { Redirect, Link} from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
-import {Button} from 'react-bootstrap';
+import {Button, Navbar, FormControl} from 'react-bootstrap';
 
 import {setAdmin, setLogin} from "../index";
 
@@ -106,10 +106,12 @@ class Login extends Component {
                     </a>
                 </div>
                 <div className="LoginInput">
-                    <input type="text" placeholder="Username" value={this.state.filterUsername} onChange={this.handleIDChange}/>
-                </div>
-                <div className="LoginInput">
-                    <input type="password" placeholder="Password" value={this.state.filterPassWord} onChange={this.handlePasswordChange}/>
+                <Navbar.Form>
+                    <FormControl type="text" placeholder="Username" value={this.state.filterUsername} onChange={this.handleIDChange}/>
+                </Navbar.Form>
+                <Navbar.Form>
+                    <FormControl type="password" placeholder="Password" value={this.state.filterPassWord} onChange={this.handlePasswordChange}/>
+                </Navbar.Form>
                 </div>
                 <div>
                     <Button onClick={this.handleConfirmClick} bsStyle="primary" className="Button1">Confirm</Button>

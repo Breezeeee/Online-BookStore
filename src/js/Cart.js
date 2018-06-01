@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
-import {Button, Table, Col} from 'react-bootstrap';
+import {Button, Table, Col, FormControl, Navbar} from 'react-bootstrap';
 
 import {setAdmin, setLogin} from "../index";
 
@@ -13,7 +13,7 @@ class CartRow extends  Component {
         this.setAmount = this.setAmount.bind(this);
         this.state = {amount: this.props.book.num};
     }
-    Book = {name:"", bid:"", price:0, stock:0, num:0, subtotal:0};
+    Book = {name:"", author:"", bid:"", price:0, stock:0, num:0};
     delBook() {
         $.ajax({
             url:"/ditem",
@@ -55,27 +55,24 @@ class CartRow extends  Component {
             async:true,
             type:"get"
         });
-        this.Book.subtotal = (this.state.amount * this.Book.price / 100).toFixed(2);
-
-        window.location.reload();
     };
 
     render() {
         const book = this.props.book;
         this.Book.name = book.bname;
+        this.Book.author = book.author;
         this.Book.bid = book.bid;
         this.Book.price = (Number(book.price) / 100).toFixed(2);
         this.Book.num = Number(book.num);
-        this.Book.subtotal = (Number(book.price) * Number(book.num) /100).toFixed(2);
         this.Book.stock= Number(book.stock);
         return(
             <tr>
                 <td>{this.Book.name}</td>
+                <td>{this.Book.author}</td>
                 <td>{this.Book.price}</td>
                 <td>
-                    <input id={this.Book.bid} type="number" placeholder={this.Book.num} value={this.state.amount} onChange={this.setAmount}/>
+                    <Navbar.Form><FormControl id={this.Book.bid} type="number" placeholder={this.Book.num} value={this.state.amount} onChange={this.setAmount}/></Navbar.Form>
                 </td>
-                <td>{this.Book.subtotal}</td>
                 <td className="t4">
                     <Button bsStyle="primary" onClick={this.delBook}>delete</Button>
                 </td>
@@ -108,9 +105,10 @@ class CartList extends Component {
                 <thead>
                 <tr>
                     <th className="t1">Book</th>
+                    <th className="t1">Author</th>
                     <th className="t4">Price</th>
                     <th className="t4">Amount</th>
-                    <th className="t4">SubTotal</th>
+                    <th> </th>
                 </tr>
                 </thead>
                 <tbody>{rows}</tbody>
@@ -200,6 +198,7 @@ class Cart extends Component {
                 <CartList/>
                 <div className="Button">
                     <Button bsStyle="primary" onClick={this.handleCreateOrderClick}>Create Order</Button>
+                    {" "}
                     <Button bsStyle="primary" onClick={this.handleCancelClick}>Back to BookList</Button>
                 </div>
             </div>

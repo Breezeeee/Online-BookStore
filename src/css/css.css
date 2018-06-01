@@ -197,3 +197,12 @@ body {
 .LoginInput {
     margin-top: 2vmin;
 }
+.SelectOption {
+    font-size: 10px;
+}
+.SignupInfo {
+    margin-top: 2vmin;
+}
+.table_button{
+    margin-top: 1vmin;
+}

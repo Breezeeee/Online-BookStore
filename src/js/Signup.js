@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
-import {Button} from 'react-bootstrap';
+import {Button, Row, Col} from 'react-bootstrap';
 import {setLogin} from "../index";
 
 class InputUsername extends Component {
@@ -54,7 +54,7 @@ class InputUsername extends Component {
         if(this.state.success === 0) {
             return (
                 <form>
-                    <div className="col-md-3 col-md-offset-5">
+                    <div className="col-md-2 col-md-offset-5">
                         <input type="text" className="form-control is-invalid" placeholder="Username" value={this.props.value} onChange={this.handleChange} required/>
                         <div className="invalid-feedback">
                             Username must be at least 6 letters
@@ -66,7 +66,7 @@ class InputUsername extends Component {
         if(this.state.success === -1)  {
             return (
                 <form>
-                    <div className="col-md-3 col-md-offset-5">
+                    <div className="col-md-2 col-md-offset-5">
                         <input type="text" className="form-control is-invalid" placeholder="Username" value={this.props.value} onChange={this.handleChange} required/>
                         <div className="invalid-feedback">
                             Username already exists
@@ -77,7 +77,7 @@ class InputUsername extends Component {
         }
         return (
             <form>
-                <div className="col-md-3 col-md-offset-5">
+                <div className="col-md-2 col-md-offset-5">
                     <input type="text" className="form-control is-valid" placeholder="Username" value={this.props.value} onChange={this.handleChange} onBlur={this.testUsername} required/>
                     <div className="valid-feedback">
                         Looks good
@@ -140,7 +140,7 @@ class InputPassword extends Component {
         if(this.state.success === 0) {
             return (
                 <form>
-                    <div className="col-md-3 col-md-offset-5">
+                    <div className="col-md-2 col-md-offset-5">
                         <input type="password" className="form-control is-invalid" placeholder="Password" value={this.props.value} onChange={this.handleChange} required/>
                         <div className="invalid-feedback">
                             Password must be at least 8 letters
@@ -152,7 +152,7 @@ class InputPassword extends Component {
         if(this.state.success === -1)  {
             return (
                 <form>
-                    <div className="col-md-3 col-md-offset-5">
+                    <div className="col-md-2 col-md-offset-5">
                         <input type="password" className="form-control is-invalid" placeholder="Password" value={this.props.value} onChange={this.handleChange} required/>
                         <div className="invalid-feedback">
                             Password must contain both number and letter
@@ -163,7 +163,7 @@ class InputPassword extends Component {
         }
         return (
             <form>
-                <div className="col-md-3 col-md-offset-5">
+                <div className="col-md-2 col-md-offset-5">
                     <input type="password" className="form-control is-valid" placeholder="Password" value={this.props.value} onChange={this.handleChange} required/>
                     <div className="valid-feedback">
                         Looks good
@@ -197,7 +197,7 @@ class InputPassword2 extends Component {
         if(this.state.success === 0) {
             return (
                 <form>
-                    <div className="col-md-3 col-md-offset-5">
+                    <div className="col-md-2 col-md-offset-5">
                         <input type="password" className="form-control is-invalid" placeholder="ConfirmPassword" value={this.props.value} onChange={this.handleChange} required/>
                         <div className="invalid-feedback">
                             The two inputs must be the same
@@ -208,7 +208,7 @@ class InputPassword2 extends Component {
         }
         return (
             <form>
-                <div className="col-md-3 col-md-offset-5">
+                <div className="col-md-2 col-md-offset-5">
                     <input type="password" className="form-control is-valid" placeholder="ConfirmPassword" value={this.props.value} onChange={this.handleChange} required/>
                     <div className="valid-feedback">
                         Looks good
@@ -242,7 +242,7 @@ class InputEmail extends Component {
         if(this.state.success === 0) {
             return (
                 <form>
-                    <div className="col-md-3 col-md-offset-5">
+                    <div className="col-md-2 col-md-offset-5">
                         <input type="text" className="form-control is-invalid" placeholder="Email" value={this.props.value} onChange={this.handleChange} required/>
                         <div className="invalid-feedback">
                             Invalid email format
@@ -253,7 +253,7 @@ class InputEmail extends Component {
         }
         return (
             <form>
-                <div className="col-md-3 col-md-offset-5">
+                <div className="col-md-2 col-md-offset-5">
                     <input type="text" className="form-control is-valid" placeholder="Email" value={this.props.value} onChange={this.handleChange} required/>
                     <div className="valid-feedback">
                         Looks good
@@ -287,7 +287,7 @@ class InputPhonenumber extends Component {
         if(this.state.success === 0) {
             return (
                 <form>
-                    <div className="col-md-3 col-md-offset-5">
+                    <div className="col-md-2 col-md-offset-5">
                         <input type="text" className="form-control is-invalid" placeholder="Phonenumber" value={this.props.value} onChange={this.handleChange} required/>
                         <div className="invalid-feedback">
                             Invalid phonenumber format
@@ -298,7 +298,7 @@ class InputPhonenumber extends Component {
         }
         return (
             <form>
-                <div className="col-md-3 col-md-offset-5">
+                <div className="col-md-2 col-md-offset-5">
                     <input type="text" className="form-control is-valid" placeholder="Phonenumber" value={this.props.value} onChange={this.handleChange} required/>
                     <div className="valid-feedback">
                         Looks good
@@ -441,25 +441,17 @@ class Signup extends Component {
                         <Link to="/login">Have account?</Link>
                     </a>
                 </div>
-                <div className="LoginInput">
+                <div className="SignupInfo">
                     <InputUsername onUsernameChange={this.setUsername} value={this.state.username} SetErr={this.SetErr1}/>
-                </div>
-                <div className="LoginInput">
                     <InputPassword onPasswordChange={this.setPassword} value={this.state.password} SetErr={this.SetErr2}/>
-                </div>
-                <div className="LoginInput">
                     <InputPassword2 onPassword2Change={this.setPassword2} value={this.state.password2} password={this.state.password} SetErr={this.SetErr3}/>
-                </div>
-                <div className="LoginInput">
                     <InputEmail onEmailChange={this.setEmail} value={this.state.email} SetErr={this.SetErr4}/>
-                </div>
-                <div className="LoginInput">
                     <InputPhonenumber onPhonenumberChange={this.setPhonenumber} value={this.state.phonenumber} SetErr={this.SetErr5}/>
                 </div>
-                <div className="Button3">
+                <Col md={2} mdOffset={5}>
                     <Button onClick={this.handleSignupClick} bsStyle="primary" className="Button1">Signup</Button>
                     <Button onClick={this.handleCancelClick} className="Button2">Cancel</Button>
-                </div>
+                </Col>
             </div>
         );
     }

@@ -3,7 +3,7 @@ import React, {Component} from'react';
 import { BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import './css/css.css';
 import $ from 'jquery';
-import {Button, ButtonToolbar} from 'react-bootstrap';
+import {Button, ButtonToolbar, Col} from 'react-bootstrap';
 
 import Home from './js/Home';
 import BookList from './js/BookList';
@@ -105,13 +105,14 @@ class OnlineBookStore extends Component {
                     </div>
                     <div>
                         <ButtonToolbar>
-                            <LoginButton/>
-                            <Button bsStyle="link">
-                                <Link to="/" className="Link1">Home</Link>
-                            </Button>
-                            <Button bsStyle="link">
-                                <Link to="/booklist" className="Link2">BookList</Link>
-                            </Button>
+                            <Col md={2} mdOffset={1}>
+                                <Button bsStyle="link"><Link to="/" className="Link1">Home</Link></Button>
+                                <Button bsStyle="link"><Link to="/booklist" className="Link2">BookList</Link></Button>
+                            </Col>
+                            <Col md={4} mdOffset={5}>
+                                <LoginButton/>
+                            </Col>
+
                         </ButtonToolbar>
                     </div>
                     <hr/>
