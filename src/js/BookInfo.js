@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import '../css/css.css';
 import $ from 'jquery';
-import {Button, Navbar, FormGroup, ControlLabel, FormControl, Col, Row} from 'react-bootstrap';
+import {Button, Navbar, FormGroup, ControlLabel, FormControl, Col, Row, ListGroupItem, ListGroup} from 'react-bootstrap';
 
 import {isLogin, setAdmin, setLogin} from "../index";
 
@@ -131,14 +131,93 @@ class Information extends Component {
                     <FormGroup>
                         <ControlLabel>Amount</ControlLabel>
                         {' '}
-                        <Button bsStyle="warning" bsSize="small" onClick={this.Minus}>-</Button>
+                        <Button bsStyle="success" bsSize="small" onClick={this.Minus}>-</Button>
                         <FormControl id="num" type="text" placeholder="1" value={this.state.amount} onChange={this.setAmount}/>
-                        <Button bsStyle="warning" bsSize="small" onClick={this.Add}>+</Button>
+                        <Button bsStyle="success" bsSize="small" onClick={this.Add}>+</Button>
                         {'  '}
-                        <Button bsStyle="warning" onClick={this.AddToCart}>Add to Cart</Button>
+                        <Button bsStyle="success" onClick={this.AddToCart}>Add to Cart</Button>
                     </FormGroup>
                 </Navbar.Form>
             </Col>
+        );
+    }
+}
+
+class Comments extends Component {
+    render() {
+        let comments = "null";
+        $.ajax({
+            url: "/qcomments",
+            data:{
+                id:this.props.BookID
+            },
+            context:document.body,
+            async:false,
+            type:"get",
+            success:function(data) {
+                if(data === "null")
+                    comments = "null";
+                else
+                    comments = $.parseJSON(data)["comments"];
+            }
+        });
+        if(comments === "null")
+            return(
+                <ListGroup>
+                    <ListGroupItem>No comments</ListGroupItem>
+                </ListGroup>);
+        let rows = [];
+        for(let i = 0; i < comments.length; i++) {
+            rows.push(<ListGroupItem>{comments[i]}</ListGroupItem>);
+        }
+        return(
+            <div>
+                <h4>Comments</h4>
+                <ListGroup>{rows}</ListGroup>
+            </div>
+        );
+    }
+}
+
+class AddComment extends Component {
+    constructor() {
+        super();
+        this.handleConfirmClick = this.handleConfirmClick.bind(this);
+        this.state = {comment:""};
+    }
+
+    handleChange = (e) => {
+        this.setState({comment:e.target.value});
+    };
+
+    handleConfirmClick() {
+        let comment = this.state.comment;
+        if(comment === "")
+            alert("comment can't be empty");
+        else {
+            $.ajax({
+                url: "/savecomment",
+                data:{
+                    bid:this.props.BookID,
+                    comment:comment
+                },
+                context:document.body,
+                async:true,
+                type:"get"
+            });
+            alert("success");
+            window.location.reload();
+        }
+    }
+
+    render() {
+        return(
+            <form>
+                <FormGroup>
+                    <FormControl componentClass="textarea" type="text" value={this.state.comment} placeholder="Your Comment." onChange={this.handleChange}/>
+                </FormGroup>
+                <Button bsStyle="success" onClick={this.handleConfirmClick}>Confirm</Button>
+            </form>
         );
     }
 }
@@ -191,6 +270,16 @@ class BookInfo extends Component {
             <div>
                 <Row>
                     <Information BookID={this.props.location.state.bookid}/>
+                </Row>
+                <Row>
+                    <Col md={6} mdOffset={3}>
+                        <Comments BookID={this.props.location.state.bookid}/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={6} mdOffset={3}>
+                        <AddComment BookID={this.props.location.state.bookid}/>
+                    </Col>
                 </Row>
                 <Row>
                     <Col md={1} mdOffset={10}>
